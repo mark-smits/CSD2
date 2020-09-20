@@ -19,13 +19,10 @@ noteDurations = [0.25, 0.5, 1]
 timestamps16th = [0]
 def durationsToTimestamps16th(noteDurs):
     for i, n in enumerate(noteDurs):
-        if i == len(noteDurs) - 1:
-            print("check")
-        else:
+        if i < len(noteDurs) - 1:
             timestamps16th.append(timestamps16th[i] + n * 4)
 
 durationsToTimestamps16th(noteDurations)
-print(timestamps16th)
 
 # functie die zestiende timestamps omzet naar secondes
 timestampssecs = []
@@ -35,7 +32,6 @@ def timestamps16thToTimestampssecs(ts16th, tempo):
 
 timestamps16thToTimestampssecs(timestamps16th, bpm)
 finalsleep = noteDurations[len(noteDurations)-1]*60/bpm
-print(timestampssecs)
 
 # laad audio in
 wave_obj = sa.WaveObject.from_wave_file(r"..\audio\Chord.wav")
@@ -50,4 +46,11 @@ while True:
             timestamp = timestampssecs.pop(0)
         else:
             time.sleep(finalsleep)
-            break
+            # shuffle notes en doe alle berekeningen opnieuw
+            t0 = time.time()
+            random.shuffle(noteDurations)
+            timestamps16th = [0]
+            durationsToTimestamps16th(noteDurations)
+            timestamps16thToTimestampssecs(timestamps16th, bpm)
+            finalsleep = noteDurations[len(noteDurations)-1]*60/bpm
+            timestamp = timestampssecs.pop(0)
