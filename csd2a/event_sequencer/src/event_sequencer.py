@@ -34,12 +34,22 @@ for i in range(3):
 for i in range(15):
     ritme.append(make_event(i*sixteenth, hhclosed, "hhclosed"))
 
+# ritme sorteren
 def keygen(e):
     return e['timestamp']
 
-print(ritme)
 ritme.sort(key=keygen)
-print(ritme)
-
 
 # event handler
+def handle_event(event):
+    t = time.time()
+    if t - t0 >= event['timestamp']:
+        event['instrument'].play()
+    else:
+        time.sleep(0.001)
+        handle_event(event)
+
+# test
+t0 = time.time()
+for i in range(len(ritme)):
+    handle_event(ritme[i])
