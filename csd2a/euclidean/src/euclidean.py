@@ -1,13 +1,13 @@
 import random
 import time
+from input_funcs import *
 from seq_gen import *
 from event_funcs import *
 
 # input
-
-test_steps = int(input("nr steps?"))
-test_trigs = int(input("nr trigs?"))
-bpm = int(input("BPM?"))
+test_steps = input_steps()
+test_trigs = input_trigs()
+bpm = input_bpm()
 
 # instruments
 
