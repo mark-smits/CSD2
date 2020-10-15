@@ -17,8 +17,9 @@ def list2event(triglist, stepsize, inst, instname):
         if k == sum(triglist):
             break
         else:
-            event_list.append(make_event(k*stepsize + event_list[i-1]['timestamp'], inst, instname))
-    event_list.sort(key=keygen)
+            if i < len(triglist) - 1:
+                event_list.append(make_event(k*stepsize + event_list[i]['timestamp'], inst, instname))
+    # event_list.sort(key=keygen)
     return event_list
 
 # event handler
