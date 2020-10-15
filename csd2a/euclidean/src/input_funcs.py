@@ -17,26 +17,37 @@ def isint(value):
 def input_steps():
     incorrect_data_type = True
     while incorrect_data_type == True:
-        steps = input('nr steps?')
+        steps = input('nr steps? ')
         if isint(steps):
             steps = int(steps)
-            print('nr. steps: ' + str(steps))
-            incorrect_data_type = False
-            return steps
+            if steps > 0 and steps < 1000:
+                print('nr. steps: ' + str(steps))
+                incorrect_data_type = False
+                return steps
+            else:
+                print('steps must obey: 0 < steps < 1000')
         else:
             print('current type: ' + str(type(steps)))
             print('please input an integer')
 
     # input voor het aantal triggers
-def input_trigs():
+def input_trigs(steps):
     incorrect_data_type = True
     while incorrect_data_type == True:
-        trigs = input('nr trigs?')
+        trigs = input('nr trigs? ')
         if isint(trigs):
             trigs = int(trigs)
-            print('nr. trigs: ' + str(trigs))
-            incorrect_data_type = False
-            return trigs
+            if trigs > 0 and trigs < 1000:
+                if trigs > steps:
+                    print('please use less trigs than steps')
+                    print('nr. steps: ' + str(steps))
+                    print('nr. trigs: ' + str(trigs))
+                else:
+                    print('nr. trigs: ' + str(trigs))
+                    incorrect_data_type = False
+                    return trigs
+            else:
+                print('trigs must obey: 0 < trigs < 1000')
         else:
             print('current type: ' + str(type(trigs)))
             print('please input an integer')
@@ -45,7 +56,7 @@ def input_trigs():
 def input_bpm():
     incorrect_data_type = True
     while incorrect_data_type == True:
-        bpm_in = input('BPM?')
+        bpm_in = input('BPM? ')
         if isfloat(bpm_in):
             bpm_in = float(bpm_in)
             if bpm_in > 0 and bpm_in < 300:

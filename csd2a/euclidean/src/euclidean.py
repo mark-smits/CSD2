@@ -6,7 +6,7 @@ from event_funcs import *
 
 # input
 test_steps = input_steps()
-test_trigs = input_trigs()
+test_trigs = input_trigs(test_steps)
 bpm = input_bpm()
 
 # instruments
