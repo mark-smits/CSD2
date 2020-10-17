@@ -68,3 +68,20 @@ def input_bpm():
         else:
             print('current type: ' + str(type(bpm_in)))
             print('please input a float')
+
+    # input voor aantal kanalen
+def input_nr_seqs():
+    incorrect_data_type = True
+    while incorrect_data_type == True:
+        nr_in = input('nr. of sequences? ')
+        if isint(nr_in):
+            nr_in = int(nr_in)
+            if nr_in > 0 and nr_in <= 10:
+                print('nr. of sequences: ' + str(nr_in))
+                incorrect_data_type = False
+                return nr_in
+            else:
+                print('nr of sequences must obey: 0 > n >= 10')
+        else:
+            print('current type: ' + str(type(nr_in)))
+            print('please input an integer')
