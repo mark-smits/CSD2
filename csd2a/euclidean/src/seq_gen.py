@@ -36,6 +36,7 @@ def euclidean_sequence_definer(steps, trigs):
                 break
     return triglist
 
+# visualizer voor de sequence
 
 def seq_visualizer(list):
     listvisualizer = []
@@ -46,3 +47,18 @@ def seq_visualizer(list):
             i = i - 1
     visual = ''.join(listvisualizer)
     return visual
+
+# laagste gemeenschappelijke vermenigvuldiger berekenen
+
+def min_verm(list):
+    incompleet = True
+    product = 1
+    while incompleet:
+        check = 0
+        for i in list:
+            check = check + (product % sum(i))
+        if check == 0:
+            incompleet = False
+            return product
+        else:
+            product = product + 1

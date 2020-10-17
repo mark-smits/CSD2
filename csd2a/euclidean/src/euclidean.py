@@ -19,18 +19,39 @@ bpm = input_bpm()
 sixteenth = 15/bpm
 
 lijstje = global_input(instruments)
+print('instrumenten: ' + str(instruments))
+print('lijstje: ' + str(lijstje))
+product = min_verm(lijstje)
+print('laagste gemene deler: ' + str(product))
+events = []
+index = 0
 for i in lijstje:
-    print(i)
-print(instruments)
-test_list = lijstje[0]
+    print("Steplengths: " + str(i))
+    print("Total nr. of steps: " + str(sum(i)))
 
-print("Steplengths: " + str(test_list))
-print("Total nr. of steps: " + str(sum(test_list)))
+    listprinter = seq_visualizer(i)
+    print(listprinter)
+    # print("sixteenth: " + str(sixteenth))
 
-listprinter = seq_visualizer(test_list)
-print(listprinter)
-print("sixteenth: " + str(sixteenth))
+    if instruments[index] == 'kick':
+        test_events = list2event(i, sixteenth, kick, instruments[index])
+    elif instruments[index] == 'clap':
+        test_events = list2event(i, sixteenth, clap, instruments[index])
+    elif instruments[index] == 'hhopen':
+        test_events = list2event(i, sixteenth, hhopen, instruments[index])
+    elif instruments[index] == 'hhclosed':
+        test_events = list2event(i, sixteenth, hhclosed, instruments[index])
+    elif instruments[index] == 'snare':
+        test_events = list2event(i, sixteenth, snare, instruments[index])
+    elif instruments[index] == 'chord':
+        test_events = list2event(i, sixteenth, chord, instruments[index])
 
-test_events = list2event(test_list, sixteenth, kick, "kick")
-print('nr. of events: ' + str(len(test_events)))
-print("eventlist: " + str(test_events))
+    events.append(test_events)
+    print('nr. of events: ' + str(len(test_events)))
+    print("eventlist: " + str(test_events))
+    index = index + 1
+
+#print(events)
+eventlijst = sum(events, [])
+eventlijst.sort(key=keygen)
+#print(eventlijst)
