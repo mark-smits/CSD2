@@ -21,13 +21,7 @@ test_list = euclidean_sequence_definer(test_steps, test_trigs)
 print("Steplengths: " + str(test_list))
 print("Total nr. of steps: " + str(sum(test_list)))
 
-listvisualizer = []
-for i in test_list:
-    listvisualizer.append('o')
-    while i > 1:
-        listvisualizer.append('-')
-        i = i - 1
-listprinter = ''.join(listvisualizer)
+listprinter = seq_visualizer(test_list)
 print(listprinter)
 print("sixteenth: " + str(sixteenth))
 

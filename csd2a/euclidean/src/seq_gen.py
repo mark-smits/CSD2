@@ -35,3 +35,14 @@ def euclidean_sequence_definer(steps, trigs):
                 print(done)
                 break
     return triglist
+
+
+def seq_visualizer(list):
+    listvisualizer = []
+    for i in list:
+        listvisualizer.append('o')
+        while i > 1:
+            listvisualizer.append('-')
+            i = i - 1
+    visual = ''.join(listvisualizer)
+    return visual
