@@ -6,6 +6,7 @@ from seq_gen import *
 from event_funcs import *
 
 # instruments
+
 kick = sa.WaveObject.from_wave_file(r"..\audio\Kick.wav")
 clap = sa.WaveObject.from_wave_file(r"..\audio\Clap.wav")
 snare = sa.WaveObject.from_wave_file(r"..\audio\Snare.wav")
@@ -14,6 +15,7 @@ hhclosed = sa.WaveObject.from_wave_file(r"..\audio\HHClosed.wav")
 chord = sa.WaveObject.from_wave_file(r"..\audio\Chord.wav")
 
 # input
+
 instruments = []
 bpm = input_bpm()
 sixteenth = 15/bpm
@@ -21,8 +23,27 @@ sixteenth = 15/bpm
 lijstje = global_input(instruments)
 print('instrumenten: ' + str(instruments))
 print('lijstje: ' + str(lijstje))
+
+# zoek de laagste gemeenschappelijke vermenigvuldiger
+
 product = min_verm(lijstje)
 print('laagste gemene deler: ' + str(product))
+
+# egaliseer het lijstje
+
+for i, k in enumerate(lijstje):
+    herhalingen = int(product/sum(k))
+    print(herhalingen)
+    temp_list = []
+    for j in range(herhalingen):
+        temp_list.append(k)
+    lijstje[i] = sum(temp_list, [])
+    print('lijstje entry ' + str(i + 1) + ': ' + str(lijstje[i]))
+    print('som lijstje entry ' + str(i + 1) + ': ' + str(sum(lijstje[i])))
+print('totaal lijstje: ' + str(lijstje))
+
+# zet lijstje om naar events
+
 events = []
 index = 0
 for i in lijstje:
@@ -55,3 +76,7 @@ for i in lijstje:
 eventlijst = sum(events, [])
 eventlijst.sort(key=keygen)
 #print(eventlijst)
+
+t0 = time.time()
+for i in eventlijst:
+    handle_event(i, t0)
