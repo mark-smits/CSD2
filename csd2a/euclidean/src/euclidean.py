@@ -5,12 +5,6 @@ from input_funcs import *
 from seq_gen import *
 from event_funcs import *
 
-# input
-test_nr = input_nr_seqs()
-test_steps = input_steps()
-test_trigs = input_trigs(test_steps)
-bpm = input_bpm()
-
 # instruments
 kick = sa.WaveObject.from_wave_file(r"..\audio\Kick.wav")
 clap = sa.WaveObject.from_wave_file(r"..\audio\Clap.wav")
@@ -19,9 +13,16 @@ hhopen = sa.WaveObject.from_wave_file(r"..\audio\HHOpen.wav")
 hhclosed = sa.WaveObject.from_wave_file(r"..\audio\HHClosed.wav")
 chord = sa.WaveObject.from_wave_file(r"..\audio\Chord.wav")
 
-# calculations
+# input
+instruments = []
+bpm = input_bpm()
 sixteenth = 15/bpm
-test_list = euclidean_sequence_definer(test_steps, test_trigs)
+
+lijstje = global_input(instruments)
+for i in lijstje:
+    print(i)
+print(instruments)
+test_list = lijstje[0]
 
 print("Steplengths: " + str(test_list))
 print("Total nr. of steps: " + str(sum(test_list)))

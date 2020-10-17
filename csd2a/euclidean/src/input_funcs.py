@@ -1,3 +1,5 @@
+from seq_gen import *
+
     # kijken naar integers en floats voor afvangen foute input
 def isfloat(value):
   try:
@@ -9,6 +11,13 @@ def isfloat(value):
 def isint(value):
   try:
     int(value)
+    return True
+  except ValueError:
+    return False
+
+def isstring(value):
+  try:
+    str(value)
     return True
   except ValueError:
     return False
@@ -85,3 +94,41 @@ def input_nr_seqs():
         else:
             print('current type: ' + str(type(nr_in)))
             print('please input an integer')
+
+    # input voor instrumenten
+def input_instrument():
+    incorrect_data_type = True
+    print('instrument choices:')
+    print('kick')
+    print('clap')
+    print('snare')
+    print('hhopen')
+    print('hhclosed')
+    print('chord')
+    while incorrect_data_type == True:
+        inst_in = input('instrument? ')
+        if isstring(inst_in):
+            inst_in = str(inst_in)
+            if inst_in == 'kick' or inst_in == 'clap' or inst_in == 'snare' or inst_in == 'hhopen' or inst_in == 'hhclosed' or inst_in == 'chord':
+                print('instrument: ' + str(inst_in))
+                incorrect_data_type = False
+                return inst_in
+            else:
+                print('instrument must be an available choice')
+        else:
+            print('current type: ' + str(type(inst_in)))
+            print('please input a string')
+
+    # input voor meerdere sporen
+def global_input(instr):
+    test_nr = input_nr_seqs()
+    test_list = []
+    i = 0
+    while i < test_nr:
+        test_inst = input_instrument()
+        instr.append(test_inst)
+        test_steps = input_steps()
+        test_trigs = input_trigs(test_steps)
+        test_list.append(euclidean_sequence_definer(test_steps, test_trigs))
+        i = i + 1
+    return test_list
