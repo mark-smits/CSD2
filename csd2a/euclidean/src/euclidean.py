@@ -4,6 +4,7 @@ import simpleaudio as sa
 from input_funcs import *
 from seq_gen import *
 from event_funcs import *
+from midi_funcs import *
 
 # instruments
 
@@ -41,6 +42,10 @@ for i, k in enumerate(lijstje):
     print('lijstje entry ' + str(i + 1) + ': ' + str(lijstje[i]))
     print('som lijstje entry ' + str(i + 1) + ': ' + str(sum(lijstje[i])))
 print('totaal lijstje: ' + str(lijstje))
+
+# maak MIDI-file
+
+make_midi_file(bpm, lijstje)
 
 # zet lijstje om naar events
 
@@ -80,3 +85,4 @@ eventlijst.sort(key=keygen)
 t0 = time.time()
 for i in eventlijst:
     handle_event(i, t0)
+time.sleep(1) # laatste sample laten uitklinken
