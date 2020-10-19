@@ -57,7 +57,6 @@ for i in lijstje:
 
     listprinter = seq_visualizer(i)
     print(listprinter)
-    # print("sixteenth: " + str(sixteenth))
 
     if instruments[index] == 'kick':
         test_events = list2event(i, sixteenth, kick, instruments[index])
@@ -77,10 +76,8 @@ for i in lijstje:
     print("eventlist: " + str(test_events))
     index = index + 1
 
-#print(events)
 eventlijst = sum(events, [])
 eventlijst.sort(key=keygen)
-#print(eventlijst)
 
 t0 = time.time()
 for i in eventlijst:
