@@ -1,4 +1,5 @@
 import time
+from seq_gen import *
 # event maker
 
 def make_event(stamp, inst, instname): # maakt een event aan mbv dictionaries
@@ -21,6 +22,38 @@ def list2event(triglist, stepsize, inst, instname): # zet de gegeven lijst met s
             if i < len(triglist) - 1: # maak events voor alle stappen behalve de laatste
                 event_list.append(make_event(k*stepsize + event_list[i]['timestamp'], inst, instname)) # voeg de events toe aan de eventlijst
     return event_list
+
+# zet heel de lijst met sequences om naar tijdgesoorteerde events
+
+def global_event_generator(list, instrumenten, sixteenth, wave_objs):
+    events = []
+    index = 0
+    for i in list:
+        if instrumenten[index] == 'kick':
+            test_events = list2event(i, sixteenth, wave_objs[0], instrumenten[index])
+        elif instrumenten[index] == 'clap':
+            test_events = list2event(i, sixteenth, wave_objs[1], instrumenten[index])
+        elif instrumenten[index] == 'hhopen':
+            test_events = list2event(i, sixteenth, wave_objs[3], instrumenten[index])
+        elif instrumenten[index] == 'hhclosed':
+            test_events = list2event(i, sixteenth, wave_objs[4], instrumenten[index])
+        elif instrumenten[index] == 'snare':
+            test_events = list2event(i, sixteenth, wave_objs[2], instrumenten[index])
+        elif instrumenten[index] == 'chord':
+            test_events = list2event(i, sixteenth, wave_objs[5], instrumenten[index])
+
+        events.append(test_events)
+        print('nr. of ' + instrumenten[index] + ' events : ' + str(len(test_events)))
+        print("Steplengths: " + str(i))
+
+        listprinter = seq_visualizer(i)
+        print(listprinter)
+
+        index = index + 1
+
+    eventlijst = sum(events, [])
+    eventlijst.sort(key=keygen)
+    return eventlijst
 
 # event handler
 
