@@ -20,6 +20,7 @@ public:
   void setSample(float samp);
   float getSample();
   float getPhase();
+  void setSR(double sr);
 
 private:
   double samplerate;

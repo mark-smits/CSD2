@@ -52,3 +52,8 @@ float Oscillator::getPhase()
 {
   return phase;
 }
+
+void Oscillator::setSR(double sr)
+{
+  this->samplerate = sr;
+}
