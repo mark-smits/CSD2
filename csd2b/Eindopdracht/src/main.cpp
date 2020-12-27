@@ -27,16 +27,29 @@ int main(int argc,char **argv)
   jack.init("example.exe");
   double samplerate = jack.getSamplerate();
   Square sine(220, samplerate);
+  Envelope env1(100,500,0.6,500,samplerate);
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&sine](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&sine,&env1](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     static float amplitude = 0.15;
 
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = sine.getSample() * amplitude;
+      outBuf[i] = sine.getSample() * amplitude * env1.getValue();
       sine.tick();
+      env1.tick();
+      env1.printValue();
+
+      if (env1.getValue() > 0.9)
+      {
+        env1.releaseStage();
+      }
+
+      if (env1.getValue() <= 0)
+      {
+        env1.initialize();
+      }
     }
 
     return 0;

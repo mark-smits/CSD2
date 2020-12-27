@@ -16,6 +16,8 @@ public:
   //setters & getters
   void setADSR(float attack, float decay, float sustain, float release);
   float getValue();
+  std::string getStage();
+  void printValue();
 private:
   float attack;
   float decay;
