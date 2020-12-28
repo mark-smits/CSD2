@@ -14,6 +14,11 @@ public:
 
   //override the calc function
   void calc();
+  //setters & getters
+  void setPW(float pw);
+  float getPW();
+private:
+  float pw;
 };
 
 #endif

@@ -5,6 +5,7 @@
 Square::Square(float frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
   std::cout << "Square Constructor" << "\n";
+  setPW(0.5);
 }
 
 Square::~Square()
@@ -15,8 +16,18 @@ Square::~Square()
 void Square::calc()
 {
   setSample(0);
-  for (int n = 1; n < 50; n+=2)
+  for (int n = 1; n < 50; n++)
   {
-    setSample( getSample() + ( sin( M_PI * 2 * getPhase() * n ) / n ) );
+    setSample( getSample() + ( sin(M_PI * getPW() * n) * cos( M_PI * 2 * getPhase() * n ) / n * 2) );
   }
+}
+
+void Square::setPW(float pw)
+{
+  this->pw = pw;
+}
+
+float Square::getPW()
+{
+  return pw;
 }

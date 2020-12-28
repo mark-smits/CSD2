@@ -14,6 +14,7 @@ Synthvoice::Synthvoice(float frequency, double samplerate) :
   ampEnv(100, 500, 0.6, 500, samplerate)
 {
   setFreqOffset(0,0,0);
+  setIndivivualAmp(1,1,1);
   std::cout << "Synthvoice Constructor" << '\n';
 }
 
@@ -87,4 +88,9 @@ void Synthvoice::setSync(float sync)
 void Synthvoice::setShaper(float value, float dw)
 {
   sine1.setShaper(value, dw);
+}
+
+void Synthvoice::setPW(float pw)
+{
+  square1.setPW(pw);
 }

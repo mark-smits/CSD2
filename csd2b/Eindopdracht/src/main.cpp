@@ -28,11 +28,14 @@ int main(int argc,char **argv)
   jack.init("example.exe");
   double samplerate = jack.getSamplerate();
   Synthvoice voice1(220, samplerate);
-  voice1.noteOn(69,127);
-  //Envelope env1(100,500,0.6,500,samplerate);
+  voice1.setIndivivualAmp(1,0,0);
+  voice1.setShaper(0.33,1);
+  voice1.noteOn(69,63);
+  float millis = 0;
+  int sample = 0;
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&voice1](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&voice1,&sample,&millis,&samplerate](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     static float amplitude = 0.15;
@@ -40,20 +43,13 @@ int main(int argc,char **argv)
     for(unsigned int i = 0; i < nframes; i++) {
       outBuf[i] = voice1.getSample() * amplitude;// * env1.getValue();
       voice1.tick();
-      /*
-      env1.tick();
-      env1.printValue();
-
-      if (env1.getValue() > 0.9)
+      sample++;
+      while ( sample > (samplerate/1000) )
       {
-        env1.releaseStage();
+        sample -= samplerate/1000;
+        millis++;
+        //std::cout << "milliseconds: " << millis << '\n';
       }
-
-      if (env1.getValue() <= 0)
-      {
-        env1.initialize();
-      }
-      */
     }
 
     return 0;

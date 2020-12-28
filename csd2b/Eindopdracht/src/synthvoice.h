@@ -26,6 +26,7 @@ public:
   //oscillator specific setters & getters
   void setSync(float sync);
   void setShaper(float value, float dw);
+  void setPW(float pw);
 private:
   double samplerate;
   float frequency;
