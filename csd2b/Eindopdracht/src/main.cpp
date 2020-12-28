@@ -7,6 +7,7 @@
 #include "saw.h"
 #include "oscillator.h"
 #include "envelope.h"
+#include "sandh.h"
 #include "synthvoice.h"
 
 /*
@@ -31,18 +32,22 @@ int main(int argc,char **argv)
   voice1.setIndivivualAmp(1,0,0);
   voice1.setShaper(0.33,1);
   voice1.noteOn(69,63);
+  SandH sh1(samplerate);
+  //sh1.generateTarget();
+  sh1.generateTime();
   float millis = 0;
   int sample = 0;
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&voice1,&sample,&millis,&samplerate](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&voice1,&sample,&millis,&samplerate,&sh1](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     static float amplitude = 0.15;
 
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = voice1.getSample() * amplitude;// * env1.getValue();
+      outBuf[i] = voice1.getSample() * amplitude;
       voice1.tick();
+      sh1.tick();
       sample++;
       while ( sample > (samplerate/1000) )
       {
