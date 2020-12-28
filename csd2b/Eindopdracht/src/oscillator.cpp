@@ -14,6 +14,10 @@ Oscillator::~Oscillator()
 
 void Oscillator::tick()
 {
+  while (phase > 1)
+  {
+    phase -= 1;
+  }
   phase += frequency/samplerate;
   calc();
 }

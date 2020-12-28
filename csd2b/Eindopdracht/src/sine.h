@@ -14,6 +14,13 @@ public:
 
   //override the calc function
   void calc();
+  //setters & getters
+  void setShaper(float value, float dw);
+  float getShaperValue();
+  float getShaperDW();
+private:
+  float shaperValue;
+  float shaperDW;
 };
 
 #endif

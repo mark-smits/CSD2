@@ -27,18 +27,19 @@ int main(int argc,char **argv)
   // init the jack, use program name as JACK client name
   jack.init("example.exe");
   double samplerate = jack.getSamplerate();
-  Synthvoice sine(220, samplerate);
+  Synthvoice voice1(220, samplerate);
+  voice1.noteOn(69,127);
   //Envelope env1(100,500,0.6,500,samplerate);
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&sine](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&voice1](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     static float amplitude = 0.15;
 
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = sine.getSample() * amplitude;// * env1.getValue();
-      sine.tick();
+      outBuf[i] = voice1.getSample() * amplitude;// * env1.getValue();
+      voice1.tick();
       /*
       env1.tick();
       env1.printValue();
