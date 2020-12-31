@@ -11,7 +11,8 @@ Synthvoice::Synthvoice(float frequency, double samplerate) :
   sine1(frequency,samplerate),
   square1(frequency,samplerate),
   saw1(frequency,samplerate),
-  ampEnv(100, 500, 0.6, 500, samplerate)
+  ampEnv(100, 500, 0.6, 500, samplerate),
+  noteActive(false)
 {
   setFreqOffset(0,0,0);
   setIndivivualAmp(1,1,1);
@@ -25,14 +26,16 @@ Synthvoice::~Synthvoice()
 
 void Synthvoice::noteOn(int midiNote, int midiVel)
 {
-  setFrequency(440 * pow(2,(69-midiNote)/12));
+  setFrequency(440 * pow(2,(69.0-(float)midiNote)/12.0));
   setGlobalAmp( pow( 10 , ( ( (float)midiVel / 127.0 * 60.0 ) - 60 ) / 20 ) ); //60 db = * 1000; 20 db = * 10; pow( 10 , ( ( (float)midiVel / 127.0 * 60.0 ) - 60 ) / 20 )
   ampEnv.initialize();
+  setNoteOn(true);
 }
 
 void Synthvoice::noteOff()
 {
   ampEnv.releaseStage();
+  setNoteOn(false);
 }
 
 void Synthvoice::tick()
@@ -93,4 +96,19 @@ void Synthvoice::setShaper(float value, float dw)
 void Synthvoice::setPW(float pw)
 {
   square1.setPW(pw);
+}
+
+void Synthvoice::setNoteOn(bool note)
+{
+  this->noteActive = note;
+}
+
+bool Synthvoice::getNoteOn()
+{
+  return noteActive;
+}
+
+void Synthvoice::setAmpADSR(float att, float dec, float sus, float rel)
+{
+  ampEnv.setADSR(att, dec, sus, rel);
 }

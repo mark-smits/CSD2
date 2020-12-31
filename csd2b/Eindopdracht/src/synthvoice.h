@@ -23,10 +23,13 @@ public:
   void setIndivivualAmp(float sineAmp, float squareAmp, float sawAmp);
   void setGlobalAmp(float amplitude);
   float getSample();
+  bool getNoteOn();
+  void setNoteOn(bool note);
   //oscillator specific setters & getters
   void setSync(float sync);
   void setShaper(float value, float dw);
   void setPW(float pw);
+  void setAmpADSR(float att, float dec, float sus, float rel);
 private:
   double samplerate;
   float frequency;
@@ -41,6 +44,7 @@ private:
   Sine sine1;
   Square square1;
   Envelope ampEnv;
+  bool noteActive;
 };
 
 #endif

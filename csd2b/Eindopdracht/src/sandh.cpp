@@ -3,9 +3,14 @@
 #include <functional>
 #include <iostream>
 
+#ifndef _RANDGEN_
+#define _RANDGEN_
+
 std::default_random_engine generator;
 std::uniform_int_distribution<int> distribution(0,100);
 auto randgen = std::bind( distribution, generator );
+
+#endif
 
 SandH::SandH(double samplerate) : samplerate(samplerate)
 {
