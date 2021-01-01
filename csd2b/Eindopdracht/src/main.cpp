@@ -40,38 +40,61 @@ int main(int argc,char **argv)
   double samplerate = jack.getSamplerate();
 
   // init melodie
-  MelodyGenerator melodie(65,0);
+  MelodyGenerator melodie1(36,0);
+  MelodyGenerator melodie2(48,0);
+  MelodyGenerator melodie3(60,0);
   int nootjes[] = {0,2,4,5,7,9,11};
-  melodie.setScale( nootjes );
+  melodie1.setScale( nootjes );
+  melodie2.setScale( nootjes );
+  melodie3.setScale( nootjes );
 
   // init synthvoices
-  Synthvoice voice1(220, samplerate);
+  Synthvoice voice1(100, samplerate);
+  Synthvoice voice2(100, samplerate);
+  Synthvoice voice3(100, samplerate);
+
   voice1.setIndivivualAmp(1,0,0);
   voice1.setShaper(0.33,1);
-  voice1.noteOn(melodie.getNote(),63);
+  voice1.noteOn(36,63);
+  voice1.setAmpADSR(200,1000,0.6,500);
+
+  voice2.setIndivivualAmp(0,1,0);
+  voice2.setPW(0.5);
+  voice2.noteOn(48,63);
+  voice2.setAmpADSR(50,500,0.8,200);
+
+  voice3.setIndivivualAmp(0,0,1);
+  voice3.setSync(1);
+  voice3.noteOn(60,63);
+  voice3.setAmpADSR(5,150,0,100);
+  // init sample and hold modules
   SandH sh1(samplerate);
+  SandH sh2(samplerate);
+  SandH sh3(samplerate);
   sh1.generateTime();
+  sh2.generateTime();
+  sh3.generateTime();
+
 
   // init time functions
   auto millis_0 = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   auto millis = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&voice1,&millis_0,&millis,&samplerate,&sh1,&melodie](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&voice1,&voice2,&voice3,&millis_0,&millis,&samplerate,&sh1,&sh2,&sh3,&melodie1,&melodie2,&melodie3](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     static float amplitude = 0.15;
 
     millis = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count() - millis_0;
-    while (millis > 1000)
-    {
-      millis -= 1000;
-    }
-    if (millis < 500)
+
+    // voice 1 note on and off
+    if (millis % 5000 < 4500)
     {
       if (!voice1.getNoteOn())
       {
-        voice1.noteOn(melodie.getNote(),63);
+        voice1.noteOn(melodie1.getNote(),63);
+        std::cout << "voice 1 trig" << '\n';
       }
     }
     else
@@ -82,10 +105,53 @@ int main(int argc,char **argv)
       }
     }
 
+    // voice 2 note on and off
+    if (millis % 2000 < 1800)
+    {
+      if (!voice2.getNoteOn())
+      {
+        voice2.noteOn(melodie2.getNote(),63);
+        std::cout << "voice 2 trig" << '\n';
+      }
+    }
+    else
+    {
+      if (voice2.getNoteOn())
+      {
+        voice2.noteOff();
+      }
+    }
+
+    // voice 3 note on and off
+    if (millis % 100 < 50)
+    {
+      if (!voice3.getNoteOn())
+      {
+        voice3.noteOn(melodie3.getNote(),63);
+        std::cout << "voice 3 trig" << '\n';
+      }
+    }
+    else
+    {
+      if (voice3.getNoteOn())
+      {
+        voice3.noteOff();
+      }
+    }
+
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = voice1.getSample() * amplitude;
+      outBuf[i] = ( voice1.getSample() + voice2.getSample() + voice3.getSample() ) * amplitude;
       voice1.tick();
+      voice2.tick();
+      voice3.tick();
+
+      voice1.setShaper( (1/ (1 + ( 5 * sh1.getValue() ) ) ) ,1);
+      voice2.setPW(sh2.getValue());
+      voice3.setSync(1 + (4 * sh3.getValue()));
+
       sh1.tick();
+      sh2.tick();
+      sh3.tick();
     }
 
     return 0;

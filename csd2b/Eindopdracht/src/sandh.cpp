@@ -19,8 +19,8 @@ SandH::SandH(double samplerate) : samplerate(samplerate)
   this->value = start;
   this->target = 0.5;
   this->time = 100.0;
-  this->rising = true;
-  setTimeRange(500,2500); //start off at 500-2500 ms
+  this->rising = false;
+  setTimeRange(300,800); //start off at 500-2500 ms
 }
 
 SandH::~SandH()
@@ -33,15 +33,15 @@ void SandH::tick()
   value += (target - start) / (samplerate / 1000 * time);
   if (rising && value > target)
   {
-    value = target;
-    start = target;
+    this->value = target;
+    this->start = target;
     generateTarget();
     generateTime();
   }
   else if (!rising && value < target)
   {
-    value = target;
-    start = target;
+    this->value = target;
+    this->start = target;
     generateTarget();
     generateTime();
   }
@@ -49,20 +49,20 @@ void SandH::tick()
 
 void SandH::generateTarget()
 {
-  target = ( (float)randomGen() ) / 100.0; //generate value between 0 and 1
+  this->target = ( (float)randomGen() ) / 100.0; //generate value between 0 and 1
   if (target > start)
   {
-    rising = true;
+    this->rising = true;
   }
   else
   {
-    rising = false;
+    this->rising = false;
   }
 }
 
 void SandH::generateTime()
 {
-  time = ( ( (float)randomGen() ) / 100.0 ) * (timeMax - timeMin) + timeMin;
+  this->time = ( ( (float)randomGen() ) / 100.0 ) * (this->timeMax - this->timeMin) + this->timeMin;
 }
 
 float SandH::getValue()

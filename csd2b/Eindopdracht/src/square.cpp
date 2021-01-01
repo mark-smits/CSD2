@@ -16,7 +16,7 @@ Square::~Square()
 void Square::calc()
 {
   setSample(0);
-  for (int n = 1; n < 50; n++)
+  for (int n = 1; n < 20; n++)
   {
     setSample( getSample() + ( sin(M_PI * getPW() * n) * cos( M_PI * 2 * getPhase() * n ) / n * 2) );
   }
@@ -29,5 +29,5 @@ void Square::setPW(float pw)
 
 float Square::getPW()
 {
-  return pw;
+  return this->pw;
 }

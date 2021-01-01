@@ -14,38 +14,38 @@ Envelope::~Envelope()
 
 void Envelope::tick()
 {
-  if (stage == "a")
+  if (this->stage == "a")
   {
-    value += 1 / ( samplerate * (attack*0.001) );
-    if (value > 1)
+    this->value += 1 / ( this->samplerate * (this->attack*0.001) );
+    if (this->value > 1)
     {
-      stage = "d";
-      value = 1;
+      this->stage = "d";
+      this->value = 1;
     }
-  } else if (stage == "d") {
-    value -= (1-sustain) / ( samplerate * (decay*0.001) );
-    if (value < sustain)
+  } else if (this->stage == "d") {
+    this->value -= (1-this->sustain) / ( this->samplerate * (this->decay*0.001) );
+    if (this->value < this->sustain)
     {
-      stage = "s";
-      value = sustain;
+      this->stage = "s";
+      this->value = this->sustain;
     }
-  } else if (stage == "s") {
-    value = sustain;
-  } else if (stage == "r") {
-    value -= sustain / ( samplerate * (release*0.001) );
-    if (value <= 0) {
-      stage = "n";
-      value = 0;
+  } else if (this->stage == "s") {
+    this->value = this->sustain;
+  } else if (this->stage == "r") {
+    this->value -= this->sustain / ( this->samplerate * (this->release*0.001) );
+    if (this->value <= 0) {
+      this->stage = "n";
+      this->value = 0;
     }
   } else {
-    value = 0;
+    this->value = 0;
   }
 }
 
 void Envelope::initialize()
 {
   this->value = 0;
-  stage = "a";
+  this->stage = "a";
 }
 
 void Envelope::releaseStage()
@@ -63,12 +63,12 @@ void Envelope::setADSR(float attack, float decay, float sustain, float release)
 
 float Envelope::getValue()
 {
-  return value;
+  return this->value;
 }
 
 std::string Envelope::getStage()
 {
-  return stage;
+  return this->stage;
 }
 
 void Envelope::printValue()

@@ -21,20 +21,7 @@ void Sine::calc()
   {
     setSample( (getSample() * sign(getSample()) - getShaperValue()) * sign(getSample()) );
   }
-  /*
-  if (getSample() > 0)
-  {
-    while (getSample() > getShaperValue())
-    {
-      setSample( getSample() - getShaperValue() );
-    }
-  } else {
-    while (getSample() < getShaperValue()*(-1))
-    {
-      setSample( getSample() + getShaperValue() );
-    }
-  }
-  */
+
   setSample( getSample() / getShaperValue() );
   //dry wet: 0 = dry; 1 = wet;
   setSample( getSample()*getShaperDW() + sin(M_PI * 2 * getPhase())*(1-getShaperDW()) );
@@ -48,10 +35,10 @@ void Sine::setShaper(float value, float dw)
 
 float Sine::getShaperValue()
 {
-  return shaperValue;
+  return this->shaperValue;
 }
 
 float Sine::getShaperDW()
 {
-  return shaperDW;
+  return this->shaperDW;
 }

@@ -14,11 +14,11 @@ Oscillator::~Oscillator()
 
 void Oscillator::tick()
 {
-  while (phase > 1)
+  while (this->phase > 1)
   {
-    phase -= 1;
+    this->phase -= 1;
   }
-  phase += frequency/samplerate;
+  this->phase += frequency/samplerate;
   calc();
 }
 
@@ -49,12 +49,12 @@ void Oscillator::setSample(float samp)
 
 float Oscillator::getSample()
 {
-  return sample;
+  return this->sample;
 }
 
 float Oscillator::getPhase()
 {
-  return phase;
+  return this->phase;
 }
 
 void Oscillator::setSR(double sr)

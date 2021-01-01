@@ -11,11 +11,11 @@ Synthvoice::Synthvoice(float frequency, double samplerate) :
   sine1(frequency,samplerate),
   square1(frequency,samplerate),
   saw1(frequency,samplerate),
-  ampEnv(100, 500, 0.6, 500, samplerate),
-  noteActive(false)
+  ampEnv(100, 500, 0.6, 500, samplerate)
 {
   setFreqOffset(0,0,0);
   setIndivivualAmp(1,1,1);
+  this->noteActive = false;
   std::cout << "Synthvoice Constructor" << '\n';
 }
 
@@ -26,31 +26,31 @@ Synthvoice::~Synthvoice()
 
 void Synthvoice::noteOn(int midiNote, int midiVel)
 {
-  setFrequency(440 * pow(2,(69.0-(float)midiNote)/12.0));
+  setFrequency(440 * pow(2,((float)midiNote-69.0)/12.0));
   setGlobalAmp( pow( 10 , ( ( (float)midiVel / 127.0 * 60.0 ) - 60 ) / 20 ) ); //60 db = * 1000; 20 db = * 10; pow( 10 , ( ( (float)midiVel / 127.0 * 60.0 ) - 60 ) / 20 )
-  ampEnv.initialize();
+  this->ampEnv.initialize();
   setNoteOn(true);
 }
 
 void Synthvoice::noteOff()
 {
-  ampEnv.releaseStage();
+  this->ampEnv.releaseStage();
   setNoteOn(false);
 }
 
 void Synthvoice::tick()
 {
-  sine1.tick();
-  square1.tick();
-  saw1.tick();
-  ampEnv.tick();
+  this->sine1.tick();
+  this->square1.tick();
+  this->saw1.tick();
+  this->ampEnv.tick();
 }
 
 void Synthvoice::setIndivivualAmp(float sineAmp, float squareAmp, float sawAmp)
 {
-  sine1.setAmp(sineAmp);
-  square1.setAmp(squareAmp);
-  saw1.setAmp(sawAmp);
+  this->sine1.setAmp(sineAmp);
+  this->square1.setAmp(squareAmp);
+  this->saw1.setAmp(sawAmp);
 }
 
 void Synthvoice::setGlobalAmp(float amplitude)
@@ -65,37 +65,38 @@ void Synthvoice::setGlobalAmp(float amplitude)
 
 void Synthvoice::setFrequency(float frequency)
 {
-  sine1.setFrequency(frequency * pow(2,sinePOffsetST/12));
-  square1.setFrequency(frequency * pow(2,squarePOffsetST/12));
-  saw1.setFrequency(frequency * pow(2,sawPOffsetST/12));
+  this->frequency = frequency;
+  sine1.setFrequency(this->frequency * pow(2.0,(float)this->sinePOffsetST/12.0));
+  square1.setFrequency(this->frequency * pow(2.0,(float)this->squarePOffsetST/12.0));
+  saw1.setFrequency(this->frequency * pow(2.0,(float)this->sawPOffsetST/12.0));
 }
 
 void Synthvoice::setFreqOffset(float sineOffset, float squareOffset, float sawOffset)
 {
-  sinePOffsetST = sineOffset;
-  squarePOffsetST = squareOffset;
-  sawPOffsetST = sawOffset;
-  setFrequency(frequency);
+  this->sinePOffsetST = sineOffset;
+  this->squarePOffsetST = squareOffset;
+  this->sawPOffsetST = sawOffset;
+  setFrequency(this->frequency);
 }
 
 float Synthvoice::getSample()
 {
-  return (sine1.getSample() + square1.getSample() + saw1.getSample()) * ampEnv.getValue();
+  return (this->sine1.getSample() + this->square1.getSample() + this->saw1.getSample()) * this->ampEnv.getValue();
 }
 
 void Synthvoice::setSync(float sync)
 {
-  saw1.setSync(sync);
+  this->saw1.setSync(sync);
 }
 
 void Synthvoice::setShaper(float value, float dw)
 {
-  sine1.setShaper(value, dw);
+  this->sine1.setShaper(value, dw);
 }
 
 void Synthvoice::setPW(float pw)
 {
-  square1.setPW(pw);
+  this->square1.setPW(pw);
 }
 
 void Synthvoice::setNoteOn(bool note)
@@ -105,10 +106,10 @@ void Synthvoice::setNoteOn(bool note)
 
 bool Synthvoice::getNoteOn()
 {
-  return noteActive;
+  return this->noteActive;
 }
 
 void Synthvoice::setAmpADSR(float att, float dec, float sus, float rel)
 {
-  ampEnv.setADSR(att, dec, sus, rel);
+  this->ampEnv.setADSR(att, dec, sus, rel);
 }

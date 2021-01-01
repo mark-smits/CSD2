@@ -16,7 +16,7 @@ Saw::~Saw()
 void Saw::calc()
 {
   setSample(0);
-  for (int n = 1; n < 50; n+=1)
+  for (int n = 1; n < 20; n+=1)
   {
     setSample( getSample() + ( sin( M_PI * 2 * getSync() * getPhase() * n ) / n ) );
   }
@@ -29,5 +29,5 @@ void Saw::setSync(float sync)
 
 float Saw::getSync()
 {
-  return syncValue;
+  return this->syncValue;
 }
