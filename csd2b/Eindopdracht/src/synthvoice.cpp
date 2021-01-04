@@ -16,12 +16,10 @@ Synthvoice::Synthvoice(float frequency, double samplerate) :
   setFreqOffset(0,0,0);
   setIndivivualAmp(1,1,1);
   this->noteActive = false;
-  std::cout << "Synthvoice Constructor" << '\n';
 }
 
 Synthvoice::~Synthvoice()
 {
-  std::cout << "Synthvoice Destructor" << '\n';
 }
 
 void Synthvoice::noteOn(int midiNote, int midiVel)
@@ -81,7 +79,7 @@ void Synthvoice::setFreqOffset(float sineOffset, float squareOffset, float sawOf
 
 float Synthvoice::getSample()
 {
-  return (this->sine1.getSample() + this->square1.getSample() + this->saw1.getSample()) * this->ampEnv.getValue();
+  return (this->sine1.getSample()*this->sine1.getAmp() + this->square1.getSample()*this->square1.getAmp() + this->saw1.getSample()*this->saw1.getAmp()) * this->ampEnv.getValue() * this->amplitude;
 }
 
 void Synthvoice::setSync(float sync)

@@ -7,21 +7,21 @@ std::default_random_engine generatornote;
 std::uniform_int_distribution<int> distributionnote(0,4);
 auto randnotegen = std::bind( distributionnote, generatornote );
 
-MelodyGenerator::MelodyGenerator(int start, int root)
+MelodyGenerator::MelodyGenerator(int start, int root, int size)
 {
-  std::cout << "MelodyGenerator Constructor" << "\n";
   this->currentnote = start;
   this->root = root;
+  this->noteSize = size;
+  this->notes = new int[size];
 }
 
 MelodyGenerator::~MelodyGenerator()
 {
-  std::cout << "MelodyGenerator Destructor" << "\n";
 }
 
 void MelodyGenerator::setScale(int notes[])
 {
-  for (int n = 0; n<7; n++){
+  for (int n = 0; n<noteSize; n++){
     this->notes[n] = notes[n];
   }
 }
@@ -63,7 +63,7 @@ int MelodyGenerator::getNote()
     }
     else
     {
-      this->noteIndex = 6;
+      this->noteIndex = noteSize - 1;
       if (this->octaveIndex > 0)
       {
         this->octaveIndex -= 1;
@@ -78,7 +78,7 @@ int MelodyGenerator::getNote()
   else if (this->randOption >= 3) //stapje omhoog
   {
 
-    if (this->noteIndex < 6)
+    if (this->noteIndex < noteSize - 1)
     {
       this->noteIndex += 1;
     }

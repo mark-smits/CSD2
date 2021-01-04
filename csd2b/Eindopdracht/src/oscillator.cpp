@@ -1,15 +1,18 @@
 #include "oscillator.h"
 #include <iostream>
 
-Oscillator::Oscillator(float frequency, double samplerate) : frequency(frequency),
-  samplerate(samplerate), amplitude(1.0), sample(0), phase(0)
+Oscillator::Oscillator(float frequency, double samplerate)
 {
-  std::cout << "Oscillator Constructor" << '\n';
+  this->frequency = frequency;
+  this->samplerate = samplerate;
+  amplitude = 1.0;
+  sample = 0;
+  phase = 0;
+
 }
 
 Oscillator::~Oscillator()
 {
-  std::cout << "Oscillator Destructor" << '\n';
 }
 
 void Oscillator::tick()
@@ -40,6 +43,11 @@ float Oscillator::getFrequency()
 void Oscillator::setAmp(float amp)
 {
   this->amplitude = amp;
+}
+
+float Oscillator::getAmp()
+{
+  return this->amplitude;
 }
 
 void Oscillator::setSample(float samp)

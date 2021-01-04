@@ -8,7 +8,7 @@ class MelodyGenerator
 {
 public:
   //constructor and destructor
-  MelodyGenerator(int start, int root);
+  MelodyGenerator(int start, int root, int noteSize);
   ~MelodyGenerator();
 
   //setters & getters
@@ -17,7 +17,8 @@ public:
   void setNote(int note);
   int getNote();
 private:
-  int notes [7];
+  int noteSize;
+  int* notes;
   int root;
   int currentnote;
   int noteIndex;

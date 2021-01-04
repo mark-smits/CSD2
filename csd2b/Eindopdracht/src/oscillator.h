@@ -17,6 +17,7 @@ public:
   void setFrequency(float freq);
   float getFrequency();
   void setAmp(float amp);
+  float getAmp();
   void setSample(float samp);
   float getSample();
   float getPhase();

@@ -14,7 +14,6 @@ auto randgen = std::bind( distribution, generator );
 
 SandH::SandH(double samplerate) : samplerate(samplerate)
 {
-  std::cout << "SandH Constructor" << "\n";
   this->start = 0.8;
   this->value = start;
   this->target = 0.5;
@@ -25,7 +24,6 @@ SandH::SandH(double samplerate) : samplerate(samplerate)
 
 SandH::~SandH()
 {
-  std::cout << "SandH Destructor" << "\n";
 }
 
 void SandH::tick()

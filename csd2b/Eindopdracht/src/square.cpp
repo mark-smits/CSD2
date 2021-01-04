@@ -4,13 +4,11 @@
 
 Square::Square(float frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
-  std::cout << "Square Constructor" << "\n";
   setPW(0.5);
 }
 
 Square::~Square()
 {
-  std::cout << "Square Destructor" << "\n";
 }
 
 void Square::calc()

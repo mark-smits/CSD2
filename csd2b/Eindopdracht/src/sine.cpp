@@ -5,13 +5,11 @@
 
 Sine::Sine(float frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
-  std::cout << "Sine Constructor" << "\n";
   setShaper(1,0);
 }
 
 Sine::~Sine()
 {
-  std::cout << "Sine Destructor" << "\n";
 }
 
 void Sine::calc()
