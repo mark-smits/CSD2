@@ -1,15 +1,19 @@
 #include "envelope.h"
 #include <iostream>
 
-Envelope::Envelope(float attack, float decay, float sustain, float release, double samplerate) :
-  attack(attack), decay(decay), sustain(sustain), release(release), samplerate(samplerate), value(0), stage("a")
+Envelope::Envelope(float attack, float decay, float sustain, float release, double samplerate)
 {
-  std::cout << "Envelope Constructor" << '\n';
+  this->attack = attack;
+  this->decay = decay;
+  this->sustain = sustain;
+  this->release = release;
+  this->samplerate = samplerate;
+  this->value = 0;
+  this->stage = "a";
 }
 
 Envelope::~Envelope()
 {
-  std::cout << "Envelope Destructor" << '\n';
 }
 
 void Envelope::tick()

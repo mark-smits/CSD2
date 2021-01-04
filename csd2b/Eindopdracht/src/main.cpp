@@ -14,6 +14,8 @@
 #include <time.h>
 #include <chrono>
 #include <ctime>
+#include <string>
+#include <fstream>
 
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
@@ -39,11 +41,62 @@ int main(int argc,char **argv)
   jack.init("example.exe");
   double samplerate = jack.getSamplerate();
 
+  // user input
+  std::fstream scale {"./scale.txt", std::ios::in};
+  std::string melNotes {};
+  int sizeNootjes;
+  int rootNoteOffset;
+  bool hasLine = true;
+  if(scale.is_open())
+  {
+    std::getline(scale, melNotes);
+    sizeNootjes = std::stoi(melNotes);
+    std::getline(scale, melNotes);
+    rootNoteOffset = std::stoi(melNotes);
+  }
+  int nootjes[sizeNootjes];
+  if(scale.is_open())
+  {
+    int i = 0;
+    while (hasLine)
+    {
+      std::getline(scale, melNotes);
+      if (melNotes == "end")
+      {
+        if (i < sizeNootjes)
+        {
+          std::cout << "error: too little notes in scale.txt in comparison to specified nr of notes" << '\n';
+          std::cout << "will fill list with latest note" << '\n';
+          while (i < sizeNootjes)
+          {
+            nootjes[i] = nootjes[i-1];
+            i++;
+          }
+        }
+        hasLine = false;
+      }
+      else if (i >= sizeNootjes)
+      {
+        std::cout << "error: too many notes in scale.txt in comparison to specified nr of notes" << '\n';
+        std::cout << "will ignore further notes" << '\n';
+        hasLine = false;
+      }
+      else
+      {
+        nootjes[i] = std::stoi(melNotes);
+        i++;
+      }
+    }
+  }
+  for (unsigned int i = 0; i < sizeof(nootjes)/sizeof(nootjes[0]);i++){
+    std::cout << "nootjes " << i << " : " << nootjes[i] << '\n';
+  }
+
   // init melodie
-  MelodyGenerator melodie1(36,0);
-  MelodyGenerator melodie2(48,0);
-  MelodyGenerator melodie3(60,0);
-  int nootjes[] = {0,2,4,5,7,9,11};
+  MelodyGenerator melodie1(36 + nootjes[0] + rootNoteOffset,rootNoteOffset,sizeNootjes);
+  MelodyGenerator melodie2(48 + nootjes[0] + rootNoteOffset,rootNoteOffset,sizeNootjes);
+  MelodyGenerator melodie3(60 + nootjes[0] + rootNoteOffset,rootNoteOffset,sizeNootjes);
+  std::cout << "size of nootjes: " << sizeNootjes << '\n';
   melodie1.setScale( nootjes );
   melodie2.setScale( nootjes );
   melodie3.setScale( nootjes );
@@ -94,7 +147,6 @@ int main(int argc,char **argv)
       if (!voice1.getNoteOn())
       {
         voice1.noteOn(melodie1.getNote(),63);
-        std::cout << "voice 1 trig" << '\n';
       }
     }
     else
@@ -111,7 +163,6 @@ int main(int argc,char **argv)
       if (!voice2.getNoteOn())
       {
         voice2.noteOn(melodie2.getNote(),63);
-        std::cout << "voice 2 trig" << '\n';
       }
     }
     else
@@ -128,7 +179,6 @@ int main(int argc,char **argv)
       if (!voice3.getNoteOn())
       {
         voice3.noteOn(melodie3.getNote(),63);
-        std::cout << "voice 3 trig" << '\n';
       }
     }
     else
