@@ -32,7 +32,7 @@ private:
   float feedback, drywet, dlvl, wlvl;
   AllPassFilter apf1, apf2, apf3, apf4, apf5, apf6;
   DelayLine del;
-  BQFilter lpf;
+  BQFilter lpf,hpf;
   Chorus chor;
   float tapc, tap1, tap2, tap3, tap4, tapd, tapf, tap5, tap6;
 };

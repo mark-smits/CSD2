@@ -17,6 +17,7 @@ public:
   float getG();
   void setA(float a_in);
   float getA();
+  void setLPF(float freq, float q_val);
 
   // delay functions
   inline void tick(){ del.tick(); }

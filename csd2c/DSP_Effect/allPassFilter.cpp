@@ -4,11 +4,13 @@
 #include <iostream>
 #include <cstring>
 
-AllPassFilter::AllPassFilter(uint delTime_in, float g_in, uint samplerate) : del(delTime_in*2), delTime(delTime_in), val_g(g_in), val_a(1.0),
-  lpf(0.003643, 0.007285, 0.003643, -1.81624, 0.83328, samplerate), apf(0,0,0,0,0,samplerate), samplerate(samplerate){
+AllPassFilter::AllPassFilter(uint delTime_in, float g_in, uint samplerate) : del(delTime_in*2), delTime(delTime_in), val_g(g_in), val_a(0.95),
+  lpf(samplerate), apf(samplerate), samplerate(samplerate){
   del.setDistance(delTime_in);
   std::cout << "APF constructor" << '\n';
-  apf.setAPF(1000,1.0);
+  apf.setAPF(1500.0,0.7);
+  lpf.setLPF(6000.0,0.7);
+  lpf.printvals();
 }
 
 AllPassFilter::~AllPassFilter(){
@@ -47,4 +49,8 @@ void AllPassFilter::setA(float a_in){
 
 float AllPassFilter::getA(){
   return val_a;
+}
+
+void AllPassFilter::setLPF(float freq, float q_val){
+  lpf.setLPF(freq,q_val);
 }

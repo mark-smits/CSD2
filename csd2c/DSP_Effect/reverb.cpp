@@ -6,15 +6,23 @@
 #include <cstring>
 #include <math.h>
 
-Reverb::Reverb(uint samplerate) : feedback(0.99), drywet(0.5),
+Reverb::Reverb(uint samplerate) : feedback(0.999), drywet(0.5),
   apf1(samplerate*4.1/1000.0,0.36,samplerate), apf2(samplerate*8.0/1000.0,0.2,samplerate),
   apf3(samplerate*11.7/1000.0,0.41,samplerate), apf4(samplerate*15.7/1000.0,0.13,samplerate),
   apf5(samplerate*61.3/1000.0,0.27,samplerate), apf6(samplerate*88.9/1000.0,0.58,samplerate),
   del(samplerate*200.0/1000.0), tapc(0), tap1(0), tap2(0), tap3(0), tap4(0), tapd(0), tap5(0), tap6(0),
-  lpf(0.030008, 0.060016, 0.030008, -1.43764, 0.573078, samplerate), chor(samplerate) {
+  lpf(samplerate), hpf(samplerate), chor(samplerate) {
     del.setDistance(samplerate*100.0/1000.0);
     std::cout << "Reverb constructor" << '\n';
     setdw(drywet);
+    lpf.setLPF(3000.0,0.707);
+    hpf.setHPF(100.0,0.5);
+    apf1.setLPF(4814.0,0.7);
+    apf2.setLPF(6065.0,0.7);
+    apf3.setLPF(3178.0,0.7);
+    apf4.setLPF(3789.0,0.7);
+    apf5.setLPF(2313.0,0.7);
+    apf6.setLPF(2108.0,0.7);
 }
 
 Reverb::~Reverb(){
@@ -33,7 +41,7 @@ void Reverb::tick(){
 }
 
 void Reverb::write(float val_in){
-  chor.write(val_in + feedback*tap6);
+  chor.write(val_in + feedback*hpf.read());
   apf1.write(tapc);
   apf2.write(tap1);
   apf3.write(tap2);
@@ -54,6 +62,7 @@ float Reverb::read(float val_in){
   tapf = lpf.read();
   tap5 = apf5.read(tapf);
   tap6 = apf6.read(tap5);
+  hpf.write(tap6);
   return ( 0.4*(tap1+tap2+tap3+tap4) + 0.3*(tap5+tap6) )*wlvl + val_in*dlvl;
 }
 

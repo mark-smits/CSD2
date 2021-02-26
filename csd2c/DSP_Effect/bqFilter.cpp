@@ -4,6 +4,8 @@
 
 #define PI 3.14159265358979323846
 
+BQFilter::BQFilter(uint samplerate) : BQFilter(0,0,0,0,0,samplerate){}
+
 BQFilter::BQFilter(float a0_in, float a1_in, float a2_in, float b1_in, float b2_in, uint samplerate) :
   a0(a0_in), a1(a1_in), a2(a2_in), b1(b1_in), b2(b2_in),
   xn(0), xn1(0), xn2(0), yn(0), yn1(0), yn2(0), samplerate(samplerate){
@@ -90,4 +92,12 @@ void BQFilter::write(float val_in){
 
 float BQFilter::read(){
   return yn;
+}
+
+void BQFilter::printvals(){
+  std::cout << "a0: " << a0 << '\n';
+  std::cout << "a1: " << a1 << '\n';
+  std::cout << "a2: " << a2 << '\n';
+  std::cout << "b1: " << b1 << '\n';
+  std::cout << "b2: " << b2 << '\n';
 }

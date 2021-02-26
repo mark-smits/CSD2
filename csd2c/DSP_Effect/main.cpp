@@ -39,29 +39,18 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   float samplerate = jack.getSamplerate();
 
-  // retrieve either default or console line argument delaytime
-  float delayTimeSec = DELAY_TIME_SEC;
-  if(argc >= 2) delayTimeSec = (float) atof(argv[1]);
-  //std::cout <<  "\nDelay time in seconds: " << delayTimeSec << "\n";
-
-  int numAPFSamplesDelay = samplerate * 10.0/1000.0;
-  std::cout << "\ninput is delay by " << numAPFSamplesDelay << " number of samples\n";
-
   Reverb verb(samplerate);
-  BQFilter lpFilter(0.003643, 0.007285, 0.003643, -1.81624, 0.83328, samplerate);
-  Chorus chor(samplerate);
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&verb, &lpFilter](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&verb](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     for(unsigned int i = 0; i < nframes; i++) {
-      // write input to delay
+      // write input to reverb
       verb.write(inBuf[i]);
-      // read delayed output
-      lpFilter.write(verb.read(inBuf[i]));
+      // read reverb
       outBuf[i] = verb.read(inBuf[i]) * 0.5;
-      // update delay --> next sample
+      // update reverb
       verb.tick();
     }
     return 0;

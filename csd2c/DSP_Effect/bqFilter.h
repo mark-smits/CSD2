@@ -7,6 +7,7 @@ class BQFilter {
 public:
 
   // constructor & destructor
+  BQFilter(uint samplerate);
   BQFilter(float a0_in, float a1_in, float a2_in, float b1_in, float b2_in, uint samplerate);
   ~BQFilter();
 
@@ -23,6 +24,9 @@ public:
   // filter functions
   void write(float val_in);
   float read();
+
+  // log functions
+  void printvals();
 
 private:
 
