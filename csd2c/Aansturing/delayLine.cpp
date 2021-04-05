@@ -22,6 +22,7 @@ void DelayLine::releaseBuffer(){
 void DelayLine::setDistance(uint dist_in){
   distance = dist_in;
   readHead = writeHead - distance + size;
+  if (readHead < 0) readHead += size;
   wrapHead(readHead);
 }
 
