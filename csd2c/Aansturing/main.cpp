@@ -7,6 +7,7 @@
 #include "bqFilter.h"
 #include "chorus.h"
 #include "encoder.h"
+#include "tapeShifter.h"
 #include <iostream>
 #include <stdio.h>
 #include <wiringPi.h>
@@ -26,8 +27,9 @@ int main(int argc, char **argv) {
 	float samplerate = jack.getSamplerate();
 	
 	Reverb verb(samplerate);
+	TapeShifter shifter(samplerate*2);
 	
-	jack.onProcess = [&verb, &index, &encList, &lastEncValList](jack_default_audio_sample_t *inBuf,
+	jack.onProcess = [&verb, &shifter, &index, &encList, &lastEncValList](jack_default_audio_sample_t *inBuf,
 		jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 			
 		index++;
@@ -76,9 +78,11 @@ int main(int argc, char **argv) {
 		}
 		
 		for(unsigned int i = 0; i < nframes; i++) {
-			verb.write(inBuf[i]);
-			outBuf[i] = verb.read(inBuf[i]) * 1.0;
+			shifter.signalToBeShifted( inBuf[i] );
+			verb.write( shifter.pitchshiftedSignal() );
+			outBuf[i] = verb.read( shifter.pitchshiftedSignal() ) * 1.0;
 			verb.tick();
+			shifter.tick();
 		}
 		return 0;
 	};
@@ -94,6 +98,9 @@ int main(int argc, char **argv) {
 			case 'q':
 				running = false;
 				jack.end();
+				break;
+			case 'c':
+				shifter.changeSawFrequency();
 				break;
 		}
 	}
