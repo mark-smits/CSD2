@@ -48,13 +48,12 @@ void Chorus::sinusCalculation(){
 }
 
 void Chorus::distanceCalculation(){
-  del1Dist = 1.84*(sinusValue1)+3.5;
-  del2Dist = 1.84*(sinusValue2)+3.5;
-  del3Dist = 0.25*(sinusValue3)+3.5;
+  del1Dist = del1ModDepth*(sinusValue1)+delAverageDist;
+  del2Dist = del2ModDepth*(sinusValue2)+delAverageDist;
+  del3Dist = del3ModDepth*(sinusValue3)+delAverageDist;
 }
 
 void Chorus::tick(){
-  // TODO: maak hier een functie van die dit doet voor alle phases
   phaseIncrease();
   sinusCalculation();
   distanceCalculation();
@@ -74,9 +73,9 @@ float Chorus::read(){
 
 void Chorus::write(float val_in){
   del1.write(val_in);
-  tap1 = del1.read()*mix1+val_in*(1-mix1);
+  tap1 = del1.read()*mix1+val_in*(1.0-mix1);
   del2.write(tap1);
-  tap2 = del2.read()*mix2+tap1*(1-mix2);
+  tap2 = del2.read()*mix2+tap1*(1.0-mix2);
   del3.write(tap2);
-  tap3 = del3.read()*mix3+tap2*(1-mix3);
+  tap3 = del3.read()*mix3+tap2*(1.0-mix3);
 }

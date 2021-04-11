@@ -22,6 +22,7 @@ private:
   float interp, tap1 = 0.0, tap2 = 0.0, tap3 = 0.0;
   float sinus[101];
   float sinusValue1 = 0, sinusValue2 = 0, sinusValue3 = 0;
+  float delAverageDist = 3.5, del1ModDepth = 1.84, del2ModDepth = 1.84, del3ModDepth = 0.25;
   int samplerate, sinIndex;
 
   void phaseIncrease();
