@@ -9,7 +9,6 @@
 typedef unsigned int uint;
 
 Reverb::Reverb(uint rate) : samplerate(rate) {
-  std::cout << "reverb constructor check\n";
     del.setDistance(samplerate*100.0/1000.0);
     setdw(drywet);
     lpf.setLPF(3000.0,0.707);

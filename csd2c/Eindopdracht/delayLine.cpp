@@ -3,7 +3,6 @@
 #include <cstring>
 
 DelayLine::DelayLine(uint size_in) : size(size_in) {
-  std::cout << "delayline constructor check\n";
   allocateBuffer();
 }
 

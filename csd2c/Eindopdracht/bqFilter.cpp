@@ -8,7 +8,7 @@ BQFilter::BQFilter(uint rate) : BQFilter(0,0,0,0,0,rate){}
 
 BQFilter::BQFilter(float a0_in, float a1_in, float a2_in, float b1_in, float b2_in, uint rate) :
   a0(a0_in), a1(a1_in), a2(a2_in), b1(b1_in), b2(b2_in), samplerate(rate){
-    std::cout << "bqf constructor check\n";
+    
 }
 
 BQFilter::~BQFilter(){

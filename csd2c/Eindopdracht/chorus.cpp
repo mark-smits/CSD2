@@ -8,13 +8,12 @@
 typedef unsigned int uint;
 
 Chorus::Chorus(uint rate) : samplerate(rate) {
-  std::cout << "chorus constructor check\n";
   for (int i = 0; i < 101; i++){
     sinus[i] = sin(PI_2/100.0*i);
   }
-  del1.setDistance((int)(del1Dist/1000.0*samplerate));
-  del2.setDistance((int)(del2Dist/1000.0*samplerate));
-  del3.setDistance((int)(del3Dist/1000.0*samplerate));
+  del1.setDistance((int)(del1Dist*samplerateMillisec));
+  del2.setDistance((int)(del2Dist*samplerateMillisec));
+  del3.setDistance((int)(del3Dist*samplerateMillisec));
 }
 
 Chorus::~Chorus(){
@@ -65,9 +64,9 @@ void Chorus::tick(){
   del2.tick();
   del3.tick();
 
-  del1.setDistance((int)(del1Dist/1000*samplerate));
-  del2.setDistance((int)(del2Dist/1000*samplerate));
-  del3.setDistance((int)(del3Dist/1000*samplerate));
+  del1.setDistance((int)(del1Dist*samplerateMillisec));
+  del2.setDistance((int)(del2Dist*samplerateMillisec));
+  del3.setDistance((int)(del3Dist*samplerateMillisec));
 }
 
 float Chorus::read(){

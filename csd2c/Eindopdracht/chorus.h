@@ -26,6 +26,7 @@ private:
   float sinus[101];
   float sinusValue1 = 0, sinusValue2 = 0, sinusValue3 = 0;
   float delAverageDist = 3.5, del1ModDepth = 1.84, del2ModDepth = 1.84, del3ModDepth = 0.25;
+  float samplerateMillisec = samplerate/1000.0;
   
   void phaseIncrease();
   void sinusCalculation();
