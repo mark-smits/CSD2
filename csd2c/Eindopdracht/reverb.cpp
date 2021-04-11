@@ -6,10 +6,9 @@
 #include <cstring>
 #include <math.h>
 
-Reverb::Reverb(uint samplerate) : apf1(samplerate*4.1/1000.0,0.36,samplerate), apf2(samplerate*8.0/1000.0,0.2,samplerate),
-  apf3(samplerate*11.7/1000.0,0.41,samplerate), apf4(samplerate*15.7/1000.0,0.13,samplerate),
-  apf5(samplerate*61.3/1000.0,0.27,samplerate), apf6(samplerate*88.9/1000.0,0.58,samplerate),
-  del(samplerate*200.0/1000.0), lpf(samplerate), hpf(samplerate), chor(samplerate) {
+typedef unsigned int uint;
+
+Reverb::Reverb(uint rate) : samplerate(rate) {
     del.setDistance(samplerate*100.0/1000.0);
     std::cout << "Reverb constructor" << '\n';
     setdw(drywet);
@@ -21,7 +20,7 @@ Reverb::Reverb(uint samplerate) : apf1(samplerate*4.1/1000.0,0.36,samplerate), a
     apf4.setLPF(3789.0,0.7);
     apf5.setLPF(2313.0,0.7);
     apf6.setLPF(2108.0,0.7);
-    this->samplerate = samplerate;
+    //this->samplerate = samplerate;
 }
 
 Reverb::~Reverb(){
@@ -102,10 +101,10 @@ void Reverb::setSize(float val_in){
   {
     val_in = 0.0;
   }
-  apf1.setDelTime(samplerate*4.1/1000.0 * ( 1 + (val_in-5.0)*0.04 ) );
-  apf1.setDelTime(samplerate*8.0/1000.0 * ( 1 + (val_in-5.0)*0.04 ) );
-  apf1.setDelTime(samplerate*11.7/1000.0 * ( 1 + (val_in-5.0)*0.04 ) );
-  apf1.setDelTime(samplerate*15.7/1000.0 * ( 1 + (val_in-5.0)*0.04 ) );
-  apf1.setDelTime(samplerate*61.3/1000.0 * ( 1 + (val_in-5.0)*0.04 ) );
-  apf1.setDelTime(samplerate*88.9/1000.0 * ( 1 + (val_in-5.0)*0.04 ) );
+  apf1.setDelTime(samplerate*4.1/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
+  apf2.setDelTime(samplerate*8.0/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
+  apf3.setDelTime(samplerate*11.7/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
+  apf4.setDelTime(samplerate*15.7/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
+  apf5.setDelTime(samplerate*61.3/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
+  apf6.setDelTime(samplerate*88.9/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
 }

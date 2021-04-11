@@ -68,8 +68,8 @@ int main(int argc, char **argv) {
 							std::cout << "\nReverb tone set to: " << currentVal*10.0 << "%\n";
 							break;
 						case 3:
-							//verb.setSize(currentVal);
-							//std::cout << "\nReverb size set to: " << currentVal*10.0 << "%\n";
+							verb.setSize(currentVal);
+							std::cout << "\nReverb size set to: " << currentVal*10.0 << "%\n";
 							std::cout << "\n4 changed\n";
 							break;
 						case 4:

@@ -14,7 +14,7 @@ class Reverb {
 public:
 
   // constructor & destructor
-  Reverb(uint samplerate);
+  Reverb(uint rate);
   ~Reverb();
 
   // setters & getters
@@ -31,10 +31,13 @@ public:
 
 private:
 
-  float feedback = 0.999, drywet = 0.5, dlvl, wlvl, samplerate;
-  AllPassFilter apf1, apf2, apf3, apf4, apf5, apf6;
-  DelayLine del;
-  BQFilter lpf,hpf;
-  Chorus chor;
+  float feedback = 0.999, drywet = 0, dlvl, wlvl;
+  uint samplerate;
+  AllPassFilter apf1{samplerate*4.1/1000.0,0.36,samplerate}, apf2{samplerate*8.0/1000.0,0.2,samplerate}, 
+  apf3{samplerate*11.7/1000.0,0.41,samplerate}, apf4{samplerate*15.7/1000.0,0.13,samplerate}, 
+  apf5{samplerate*61.3/1000.0,0.27,samplerate}, apf6{samplerate*88.9/1000.0,0.58,samplerate};
+  DelayLine del{samplerate*200.0/1000.0};
+  BQFilter lpf{samplerate},hpf{samplerate};
+  Chorus chor{samplerate};
   float tapc = 0, tap1 = 0, tap2 = 0, tap3 = 0, tap4 = 0, tapd = 0, tapf = 0, tap5 = 0, tap6 = 0;
 };
