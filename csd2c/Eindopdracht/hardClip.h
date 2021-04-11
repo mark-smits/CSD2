@@ -3,30 +3,25 @@
 
 #include <iostream>
 
-//Class Initiation
 class Hardclip{
-//acces specifier
+
 public:
   Hardclip();
   ~Hardclip();
-//Calculation
-void Hard();
-double Clip();
 
-//setters and getters
-void setDrive(int drive_in);
-int getDrive();
+  void tick();
+  float read();
 
-//Catching the inbuf[i]
-double Catch(double input);
+  void setDrive(int drive_in);
+  int getDrive();
 
-//Acces specifier
+  void write(float input);
+
 protected:
-//variabeles
-double sampletje;
-double sample;
- int drive;
-double input;
+  float sample_dry;
+  float sample_wet;
+  int drive;
+  float input;
 };
 
 #endif

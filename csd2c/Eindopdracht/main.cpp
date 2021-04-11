@@ -83,11 +83,11 @@ int main(int argc, char **argv) {
 		for(unsigned int i = 0; i < nframes; i++) {
 			shifter.signalToBeShifted( inBuf[i] );
 			verb.write( shifter.pitchshiftedSignal() );
-			clipper.Catch( verb.read( shifter.pitchshiftedSignal() ) );
+			clipper.write( verb.read( shifter.pitchshiftedSignal() ) );
 			verb.tick();
 			shifter.tick();
-			clipper.Hard();
-			outBuf[i] = clipper.Clip() * 1.0;
+			clipper.tick();
+			outBuf[i] = clipper.read() * 1.0;
 		}
 		return 0;
 	};

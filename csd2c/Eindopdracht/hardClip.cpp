@@ -1,40 +1,39 @@
 #include "hardClip.h"
 
-
-//Class Initiation
 Hardclip::Hardclip()
 {
-//  this->drive = drive;
+
 }
 Hardclip::~Hardclip()
-{}
-//HardClip
-void Hardclip::Hard()
+{
+  
+}
+
+void Hardclip::tick()
 {
   drive = std::max(drive, 0); //Protection against negative numbers
-  float x1 = sampletje * drive;
+  float x1 = sample_dry * drive;
 
-    if(x1 > 1){
-      sample = 1;
-    }else if(x1 < -1){
-      sample = -1;
-    }else{
-      sample = x1;
-    }
+  if(x1 > 1){
+    sample_wet = 1;
+  }else if(x1 < -1){
+    sample_wet = -1;
+  }else{
+    sample_wet = x1;
+  }
 
 }
 
-double Hardclip::Clip()
+float Hardclip::read()
 {
-  return sample;
+  return sample_wet;
 }
-//Catch functie
-double Hardclip::Catch(double input)
+
+void Hardclip::write(float input)
 {
-  sampletje = input;
-  return sampletje;
+  sample_dry = input;
 }
-//setters getters
+
 void Hardclip::setDrive(int drive_in)
 {
   this->drive = drive_in;
