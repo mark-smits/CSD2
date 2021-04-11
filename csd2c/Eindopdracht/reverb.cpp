@@ -9,16 +9,16 @@
 typedef unsigned int uint;
 
 Reverb::Reverb(uint rate) : samplerate(rate) {
-    del.setDistance(samplerate*100.0/1000.0);
+    del.setDistance(samplerateMillisec*100.0);
     setdw(drywet);
-    lpf.setLPF(3000.0,0.707);
-    hpf.setHPF(100.0,0.5);
-    apf1.setLPF(4814.0,0.7);
-    apf2.setLPF(6065.0,0.7);
-    apf3.setLPF(3178.0,0.7);
-    apf4.setLPF(3789.0,0.7);
-    apf5.setLPF(2313.0,0.7);
-    apf6.setLPF(2108.0,0.7);
+    lpf.setLPF(lpf_freq, resonance);
+    hpf.setHPF(hpf_freq, resonance);
+    apf1.setLPF(apf1_freq, resonance);
+    apf2.setLPF(apf2_freq, resonance);
+    apf3.setLPF(apf3_freq, resonance);
+    apf4.setLPF(apf4_freq, resonance);
+    apf5.setLPF(apf5_freq, resonance);
+    apf6.setLPF(apf6_freq, resonance);
 }
 
 Reverb::~Reverb(){
@@ -88,7 +88,7 @@ void Reverb::setTone(float val_in){
   {
     val_in = 0.0;
   }
-  lpf.setLPF(3000.0 * pow( 1.5, (val_in-5.0) * 0.8 ) , 0.707);
+  lpf.setLPF(lpf_freq * pow( 1.5, (val_in-5.0) * 0.8 ) , resonance);
 }
 
 void Reverb::setSize(float val_in){
@@ -100,10 +100,11 @@ void Reverb::setSize(float val_in){
   {
     val_in = 0.0;
   }
-  apf1.setDelTime(samplerate*4.1/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
-  apf2.setDelTime(samplerate*8.0/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
-  apf3.setDelTime(samplerate*11.7/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
-  apf4.setDelTime(samplerate*15.7/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
-  apf5.setDelTime(samplerate*61.3/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
-  apf6.setDelTime(samplerate*88.9/1000.0 * ( 1 + (val_in-5.0)*0.1 ) );
+  delay_mult = 1.0 + (val_in-5.0)*0.1;
+  apf1.setDelTime(samplerateMillisec*apf1_default_delay_time_ms * delay_mult);
+  apf2.setDelTime(samplerateMillisec*apf2_default_delay_time_ms * delay_mult);
+  apf3.setDelTime(samplerateMillisec*apf3_default_delay_time_ms * delay_mult);
+  apf4.setDelTime(samplerateMillisec*apf4_default_delay_time_ms * delay_mult);
+  apf5.setDelTime(samplerateMillisec*apf5_default_delay_time_ms * delay_mult);
+  apf6.setDelTime(samplerateMillisec*apf6_default_delay_time_ms * delay_mult);
 }
