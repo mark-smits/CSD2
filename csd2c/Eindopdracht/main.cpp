@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 		
 		for (int i = 0; i < 5; i++)
 		{
-			encList[i].tick();
+			encList[i].checkPins();
 		}
 		
 		while (index > 10) {

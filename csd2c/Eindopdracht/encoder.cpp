@@ -4,10 +4,6 @@
 #include <iostream>
 
 Encoder::Encoder(int lPin, int rPin) : lPin(lPin), rPin(rPin) {
-	this->minVal = 0;
-	this->maxVal = 10;
-	this->val = 0;
-	this->lPinLastState = 0;
 	wiringPiSetup();
 	pinMode(lPin, INPUT);
 	pinMode(rPin, INPUT);
@@ -44,7 +40,7 @@ void Encoder::clip() {
 	}
 }
 
-void Encoder::tick() {
+void Encoder::checkPins() {
 	if (readPin(lPin) == 1 && readPin(lPin) != lPinLastState) {
 		if (readPin(rPin) == 1) {
 			val++;

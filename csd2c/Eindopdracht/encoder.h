@@ -15,15 +15,15 @@ class Encoder {
 		void setMaxVal(int maxInput);
 		void setMinVal(int minInput);
 		void clip();
-		void tick();
+		void checkPins();
 		int getVal();
 
 	private:
 
 		int lPin, rPin;
-		int val;
-		int minVal, maxVal;
-		int lPinLastState;
+		int val = 0;
+		int minVal = 0, maxVal = 10;
+		int lPinLastState = 0;
 
 };
 
