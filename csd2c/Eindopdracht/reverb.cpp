@@ -6,12 +6,10 @@
 #include <cstring>
 #include <math.h>
 
-Reverb::Reverb(uint samplerate) : feedback(0.999), drywet(0.5),
-  apf1(samplerate*4.1/1000.0,0.36,samplerate), apf2(samplerate*8.0/1000.0,0.2,samplerate),
+Reverb::Reverb(uint samplerate) : apf1(samplerate*4.1/1000.0,0.36,samplerate), apf2(samplerate*8.0/1000.0,0.2,samplerate),
   apf3(samplerate*11.7/1000.0,0.41,samplerate), apf4(samplerate*15.7/1000.0,0.13,samplerate),
   apf5(samplerate*61.3/1000.0,0.27,samplerate), apf6(samplerate*88.9/1000.0,0.58,samplerate),
-  del(samplerate*200.0/1000.0), tapc(0), tap1(0), tap2(0), tap3(0), tap4(0), tapd(0), tap5(0), tap6(0),
-  lpf(samplerate), hpf(samplerate), chor(samplerate) {
+  del(samplerate*200.0/1000.0), lpf(samplerate), hpf(samplerate), chor(samplerate) {
     del.setDistance(samplerate*100.0/1000.0);
     std::cout << "Reverb constructor" << '\n';
     setdw(drywet);

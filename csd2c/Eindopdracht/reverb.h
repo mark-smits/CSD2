@@ -31,10 +31,10 @@ public:
 
 private:
 
-  float feedback, drywet, dlvl, wlvl, samplerate;
+  float feedback = 0.999, drywet = 0.5, dlvl, wlvl, samplerate;
   AllPassFilter apf1, apf2, apf3, apf4, apf5, apf6;
   DelayLine del;
   BQFilter lpf,hpf;
   Chorus chor;
-  float tapc, tap1, tap2, tap3, tap4, tapd, tapf, tap5, tap6;
+  float tapc = 0, tap1 = 0, tap2 = 0, tap3 = 0, tap4 = 0, tapd = 0, tapf = 0, tap5 = 0, tap6 = 0;
 };
