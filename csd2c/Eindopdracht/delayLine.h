@@ -37,9 +37,9 @@ private:
   void releaseBuffer();
 
   float* bufferMemory;
-  float feedback;
+  float feedback = 0;
   uint size;
-  uint writeHead;
-  uint readHead;
+  uint writeHead = 0;
+  uint readHead = 0;
   uint distance;
 };

@@ -6,10 +6,6 @@
 * as a prerequisite of the methodology a couple things need to be defined
 * We need PI as a part of the windowing function - using a cosine function
 * Is it a part of <cmath> ? probably, but like this we know for sure.
-* As a part of Ciska Vrezenga's circbuffer which I stole
-* the max delay size and delay time sec are pre-defined. we probably won't
-* be needing a max size of 10 seconds, but I see no reason currently to
-* lower that.
 */
 
 #define MAX_DELAY_SIZE 441000
@@ -30,33 +26,29 @@
 class TapeShifter
 {
 public:
-  TapeShifter(int numSamplesDelay);
+  TapeShifter(int numSamplesDelay, float rate);
   ~TapeShifter();
 
-
-void initializeShifter();
-
-  //input
-void signalToBeShifted(double inputFromInbuff);
-
-  //output
-double pitchshiftedSignal();
-
-  //pitchshift amount
-void changeSawFrequency();
-
-  //tick function
-void tick();
+  void initializeShifter();
+  void write(float inputFromInbuff);
+  float read();
+  void changeSawFrequency();
+  void tick();
 
 protected:
-  double inputFromInbuff, sawFrequency;
-  double outPutSample;
+  float inputFromInbuff, sawFrequency;
+  float outPutSample;
 
-  double samplerate = 44100;
-  float delayTimeSec = DELAY_TIME_SEC;
-  int numSamplesDelay = samplerate * delayTimeSec;
+  float samplerate;
+  int numSamplesDelay;
+  
 private:
-DelayLine del1, del2;
-Saw saw1;
-
+  DelayLine del1{numSamplesDelay*2}, del2{numSamplesDelay*2};
+  Saw saw1{1.0, samplerate};
+  float samplesPerMillisec = samplerate/1000.0;
+  float delTimeScaling = 5.0;
+  float volumeScaling = 0.5;
+  float getWindowingOutput();
+  float getWindowingPhaseShiftedOutput();
+  void delayDistanceCalc();
 };

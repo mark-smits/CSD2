@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 	float samplerate = jack.getSamplerate();
 	
 	Reverb verb(samplerate);
-	TapeShifter shifter(samplerate*2);
+	TapeShifter shifter(samplerate*2, samplerate);
 	Hardclip clipper;
 	clipper.setDrive(2);
 	
@@ -81,9 +81,9 @@ int main(int argc, char **argv) {
 		}
 		
 		for(unsigned int i = 0; i < nframes; i++) {
-			shifter.signalToBeShifted( inBuf[i] );
-			verb.write( shifter.pitchshiftedSignal() );
-			clipper.write( verb.read( shifter.pitchshiftedSignal() ) );
+			shifter.write( inBuf[i] );
+			verb.write( shifter.read() );
+			clipper.write( verb.read( shifter.read() ) );
 			verb.tick();
 			shifter.tick();
 			clipper.tick();
