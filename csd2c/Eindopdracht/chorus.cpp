@@ -5,13 +5,16 @@
 
 #define PI_2 6.28318530717959
 
-Chorus::Chorus(int rate) : samplerate(rate) {
+typedef unsigned int uint;
+
+Chorus::Chorus(uint rate) : samplerate(rate) {
+  std::cout << "chorus constructor check\n";
   for (int i = 0; i < 101; i++){
-    sinus[i] = sin(PI_2/100*i);
+    sinus[i] = sin(PI_2/100.0*i);
   }
-  del1.setDistance((int)(del1Dist/1000*samplerate));
-  del2.setDistance((int)(del2Dist/1000*samplerate));
-  del3.setDistance((int)(del3Dist/1000*samplerate));
+  del1.setDistance((int)(del1Dist/1000.0*samplerate));
+  del2.setDistance((int)(del2Dist/1000.0*samplerate));
+  del3.setDistance((int)(del3Dist/1000.0*samplerate));
 }
 
 Chorus::~Chorus(){
@@ -20,16 +23,16 @@ Chorus::~Chorus(){
 
 void Chorus::phaseIncrease(){
   phase1 += del1Rate/samplerate;
-  while (phase1 > 1){
-    phase1 -= 1;
+  while (phase1 >= 1.0){
+    phase1 -= 1.0;
   }
   phase2 += del2Rate/samplerate;
-  while (phase2 > 1){
-    phase2 -= 1;
+  while (phase2 >= 1.0){
+    phase2 -= 1.0;
   }
   phase3 += del3Rate/samplerate;
-  while (phase3 > 1){
-    phase3 -= 1;
+  while (phase3 >= 1.0){
+    phase3 -= 1.0;
   }
 }
 

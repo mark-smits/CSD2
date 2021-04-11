@@ -2,11 +2,13 @@
 
 #include "delayLine.h"
 
+typedef unsigned int uint;
+
 class Chorus {
 
 public:
 
-  Chorus(int rate);
+  Chorus(uint rate);
   ~Chorus();
   
   void write(float val_in);
@@ -15,7 +17,8 @@ public:
 
 private:
 
-  DelayLine del1{10*samplerate/1000}, del2{10*samplerate/1000}, del3{10*samplerate/1000};
+  uint samplerate, sinIndex;
+  DelayLine del1{12.0*samplerate/1000.0}, del2{12.0*samplerate/1000.0}, del3{12.0*samplerate/1000.0};
   float mix1 = 0.6, mix2 = 0.6, mix3 = 0.6;
   float phase1 = 0.0, phase2 = 0.0, phase3 = 0.0;
   float del1Dist = 3.5, del2Dist = 3.5, del3Dist = 3.5, del1Rate = 0.41, del2Rate = 0.59, del3Rate = 7.9;
@@ -23,8 +26,7 @@ private:
   float sinus[101];
   float sinusValue1 = 0, sinusValue2 = 0, sinusValue3 = 0;
   float delAverageDist = 3.5, del1ModDepth = 1.84, del2ModDepth = 1.84, del3ModDepth = 0.25;
-  int samplerate, sinIndex;
-
+  
   void phaseIncrease();
   void sinusCalculation();
   void distanceCalculation();

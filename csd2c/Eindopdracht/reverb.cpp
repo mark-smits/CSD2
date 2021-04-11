@@ -9,8 +9,8 @@
 typedef unsigned int uint;
 
 Reverb::Reverb(uint rate) : samplerate(rate) {
+  std::cout << "reverb constructor check\n";
     del.setDistance(samplerate*100.0/1000.0);
-    std::cout << "Reverb constructor" << '\n';
     setdw(drywet);
     lpf.setLPF(3000.0,0.707);
     hpf.setHPF(100.0,0.5);
@@ -20,7 +20,6 @@ Reverb::Reverb(uint rate) : samplerate(rate) {
     apf4.setLPF(3789.0,0.7);
     apf5.setLPF(2313.0,0.7);
     apf6.setLPF(2108.0,0.7);
-    //this->samplerate = samplerate;
 }
 
 Reverb::~Reverb(){
@@ -39,7 +38,7 @@ void Reverb::tick(){
 }
 
 void Reverb::write(float val_in){
-  chor.write(val_in + feedback*hpf.read());
+  chor.write(val_in + feedback*tap6*0.8);
   apf1.write(tapc);
   apf2.write(tap1);
   apf3.write(tap2);
@@ -61,7 +60,8 @@ float Reverb::read(float val_in){
   tap5 = apf5.read(tapf);
   tap6 = apf6.read(tap5);
   hpf.write(tap6);
-  return ( 0.4*(tap1+tap2+tap3+tap4) + 0.3*(tap5+tap6) )*wlvl + val_in*dlvl;
+  wet_output = early_reflections_amp*(tap1+tap2+tap3+tap4) + late_reflections_amp*(tap5+tap6);
+  return wet_output*wlvl + val_in*dlvl;
 }
 
 void Reverb::setdw(float val_in){
@@ -74,9 +74,9 @@ void Reverb::setdw(float val_in){
   {
     drywet = 0.0;
   }
-  dlvl = pow((1.0-drywet), 0.65);
+  dlvl = pow((1.0-drywet), drywet_exponent);
   std::cout << "dlvl: " << dlvl << '\n';
-  wlvl = pow((drywet), 0.65);
+  wlvl = pow((drywet), drywet_exponent);
   std::cout << "wlvl: " << wlvl << '\n';
 }
 
