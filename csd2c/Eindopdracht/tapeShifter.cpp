@@ -34,19 +34,19 @@ double TapeShifter::pitchshiftedSignal()
   * Output = X2 * (SawWave_Output -- Phaseshifted -- * cos)
   */
 
-    outPutSample = ((del1.read() * 0.5) * cos((saw1.getSample() -0.5) * PI)) + ((del2.read() * 0.5) * cos((std::fmod((saw1.getSample() + 0.5), 1.0) -0.5) * PI));
+  outPutSample = ((del1.read() * 0.5) * cos((saw1.getSample() -0.5) * PI)) + ((del2.read() * 0.5) * cos((std::fmod((saw1.getSample() + 0.5), 1.0) -0.5) * PI));
     
 
-    return outPutSample;
+  return outPutSample;
 }
 
 void TapeShifter::tick()
 {
 	del1.tick();
-    del2.tick();
-    del1.setDistance(((saw1.getSample() * 100.0) + 5.0) * 44.1);  //Delay time modulation
-    del2.setDistance(((std::fmod((saw1.getSample() + 0.5), 1.0 ) * 100.0) + 5.0) * 44.1);  //second buffer modulation at half a wavelength difference
-    saw1.tick();
+  del2.tick();
+  del1.setDistance(((saw1.getSample() * 100.0) + 5.0) * 44.1);  //Delay time modulation
+  del2.setDistance(((std::fmod((saw1.getSample() + 0.5), 1.0 ) * 100.0) + 5.0) * 44.1);  //second buffer modulation at half a wavelength difference
+  saw1.tick();
 }
 
 void TapeShifter::changeSawFrequency()
