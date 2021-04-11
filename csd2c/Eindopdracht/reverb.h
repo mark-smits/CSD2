@@ -4,12 +4,13 @@
 #include "delayLine.h"
 #include "bqFilter.h"
 #include "chorus.h"
+#include "effect.h"
 #include <cstring>
 #include <iostream>
 
 typedef unsigned int uint;
 
-class Reverb {
+class Reverb : public Effect {
 
 public:
 
@@ -29,17 +30,16 @@ public:
 private:
 
   float feedback = 0.95, drywet = 0.0, drywet_exponent = 0.65, dlvl, wlvl;
-  uint samplerate;
-  AllPassFilter apf1{samplerate*4.1/1000.0,0.36,samplerate}, apf2{samplerate*8.0/1000.0,0.2,samplerate}, 
-  apf3{samplerate*11.7/1000.0,0.41,samplerate}, apf4{samplerate*15.7/1000.0,0.13,samplerate}, 
-  apf5{samplerate*61.3/1000.0,0.27,samplerate}, apf6{samplerate*88.9/1000.0,0.58,samplerate};
-  DelayLine del{samplerate*200.0/1000.0};
-  BQFilter lpf{samplerate},hpf{samplerate};
-  Chorus chor{samplerate};
+  AllPassFilter apf1{getSamplerate()*4.1/1000.0,0.36,getSamplerate()}, apf2{getSamplerate()*8.0/1000.0,0.2,getSamplerate()}, 
+  apf3{getSamplerate()*11.7/1000.0,0.41,getSamplerate()}, apf4{getSamplerate()*15.7/1000.0,0.13,getSamplerate()}, 
+  apf5{getSamplerate()*61.3/1000.0,0.27,getSamplerate()}, apf6{getSamplerate()*88.9/1000.0,0.58,getSamplerate()};
+  DelayLine del{getSamplerate()*200.0/1000.0};
+  BQFilter lpf{getSamplerate()},hpf{getSamplerate()};
+  Chorus chor{getSamplerate()};
   float tapc = 0.0, tap1 = 0.0, tap2 = 0.0, tap3 = 0.0, tap4 = 0.0, tapd = 0.0, tapf = 0.0, tap5 = 0.0, tap6 = 0.0;
   float early_reflections_amp = 0.4, late_reflections_amp = 0.3; 
   float wet_output = 0.0;
-  float samplerateMillisec = samplerate/1000.0;
+  float samplerateMillisec = getSamplerate()/1000.0;
   float apf1_default_delay_time_ms = 4.1;
   float apf2_default_delay_time_ms = 8.0;
   float apf3_default_delay_time_ms = 11.7;

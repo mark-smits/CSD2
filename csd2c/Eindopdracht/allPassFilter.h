@@ -1,14 +1,15 @@
 #pragma once
 #include "delayLine.h"
 #include "bqFilter.h"
+#include "effect.h"
 
 typedef unsigned int uint;
 
-class AllPassFilter {
+class AllPassFilter : public Effect {
 
 public:
 
-  AllPassFilter(uint delTime_in, float g_in, uint samplerate);
+  AllPassFilter(uint delTime_in, float g_in, uint rate);
   ~AllPassFilter();
 
   void setG(float g_in);
@@ -25,9 +26,8 @@ public:
 private:
 
   uint delTime;
-  uint samplerate;
   DelayLine del{delTime*4};
-  BQFilter lpf{samplerate}, apf{samplerate}; //additional biquad allpassfilter added for more smearing
+  BQFilter lpf{getSamplerate()}, apf{getSamplerate()}; //additional biquad allpassfilter added for more smearing
   float val_g;
   float val_a = 0.9;
 };

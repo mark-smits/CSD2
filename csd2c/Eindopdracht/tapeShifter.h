@@ -1,6 +1,7 @@
 #include "delayLine.h"
 #include "saw.h"
 #include "math.h"
+#include "effect.h"
 
 /*
 * as a prerequisite of the methodology a couple things need to be defined
@@ -23,7 +24,7 @@
 *   which results in a click, so for that we need to apply some windowing
 */
 
-class TapeShifter
+class TapeShifter : public Effect
 {
 public:
   TapeShifter(int numSamplesDelay, float rate);
@@ -38,14 +39,12 @@ public:
 protected:
   float inputFromInbuff, sawFrequency;
   float outPutSample;
-
-  float samplerate;
   int numSamplesDelay;
   
 private:
   DelayLine del1{numSamplesDelay*2}, del2{numSamplesDelay*2};
-  Saw saw1{1.0, samplerate};
-  float samplesPerMillisec = samplerate/1000.0;
+  Saw saw1{1.0, getSamplerate()};
+  float samplesPerMillisec = getSamplerate()/1000.0;
   float delTimeScaling = 5.0;
   float volumeScaling = 0.5;
   float getWindowingOutput();

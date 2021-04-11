@@ -7,7 +7,7 @@
 
 typedef unsigned int uint;
 
-Chorus::Chorus(uint rate) : samplerate(rate) {
+Chorus::Chorus(uint rate) : Effect(rate) {
   for (int i = 0; i < 101; i++){
     sinus[i] = sin(PI_2/100.0*i);
   }
@@ -21,15 +21,15 @@ Chorus::~Chorus(){
 }
 
 void Chorus::phaseIncrease(){
-  phase1 += del1Rate/samplerate;
+  phase1 += del1Rate/getSamplerate();
   while (phase1 >= 1.0){
     phase1 -= 1.0;
   }
-  phase2 += del2Rate/samplerate;
+  phase2 += del2Rate/getSamplerate();
   while (phase2 >= 1.0){
     phase2 -= 1.0;
   }
-  phase3 += del3Rate/samplerate;
+  phase3 += del3Rate/getSamplerate();
   while (phase3 >= 1.0){
     phase3 -= 1.0;
   }

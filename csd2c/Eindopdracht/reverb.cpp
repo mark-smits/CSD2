@@ -8,7 +8,7 @@
 
 typedef unsigned int uint;
 
-Reverb::Reverb(uint rate) : samplerate(rate) {
+Reverb::Reverb(uint rate) : Effect(rate) {
     del.setDistance(samplerateMillisec*100.0);
     setdw(drywet);
     lpf.setLPF(lpf_freq, resonance);

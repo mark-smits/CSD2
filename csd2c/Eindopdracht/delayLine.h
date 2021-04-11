@@ -1,22 +1,19 @@
 #pragma once
+#include "effect.h"
 
 typedef unsigned int uint;
 
-class DelayLine {
+class DelayLine : public Effect {
 
 public:
-
-  // constructor & destructor
   DelayLine(uint size_in);
   ~DelayLine();
-
-  // setters & getters
+  
   void setDistance(uint dist_in);
   uint getDistance();
   void setFB(float fb_in);
   float getFB();
-
-  // delay line read & write
+  
   inline void write(float val){ bufferMemory[writeHead] = val + (feedback * bufferMemory[readHead]); }
   inline float read(){ return bufferMemory[readHead]; }
 

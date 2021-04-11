@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 
-AllPassFilter::AllPassFilter(uint delTime_in, float g_in, uint rate) : delTime(delTime_in), val_g(g_in), samplerate(rate){
+AllPassFilter::AllPassFilter(uint delTime_in, float g_in, uint rate) : Effect(rate), delTime(delTime_in), val_g(g_in) {
   del.setDistance(delTime_in);
   float apf_freq = 1500.0;
   float lpf_freq = 6000.0;

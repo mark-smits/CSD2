@@ -8,7 +8,7 @@
 #define PI_2 6.28318530717959
 #define PI 3.14159265358979323846264338327950288419716939937510
 
-TapeShifter::TapeShifter(int numSamplesDelay, float rate) : numSamplesDelay(numSamplesDelay), samplerate(rate)
+TapeShifter::TapeShifter(int numSamplesDelay, float rate) : numSamplesDelay(numSamplesDelay), Effect(rate)
 {
     del1.setDistance(numSamplesDelay);
     del2.setDistance(numSamplesDelay);

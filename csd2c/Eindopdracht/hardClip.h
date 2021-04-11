@@ -2,8 +2,9 @@
 #define _HARDCLIP_H_
 
 #include <iostream>
+#include "effect.h"
 
-class Hardclip{
+class Hardclip : public Effect {
 
 public:
   Hardclip();

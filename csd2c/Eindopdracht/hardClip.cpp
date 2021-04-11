@@ -1,6 +1,6 @@
 #include "hardClip.h"
 
-Hardclip::Hardclip()
+Hardclip::Hardclip() : Effect()
 {
 
 }

@@ -1,8 +1,10 @@
 #pragma once
 
+#include "effect.h"
+
 typedef unsigned int uint;
 
-class BQFilter {
+class BQFilter : public Effect {
 
 public:
 
@@ -26,6 +28,4 @@ public:
 private:
 
   float a0, a1, a2, b1, b2, xn = 0, xn1 = 0, xn2 = 0, yn = 0, yn1 = 0, yn2 = 0;
-  uint samplerate;
-
 };

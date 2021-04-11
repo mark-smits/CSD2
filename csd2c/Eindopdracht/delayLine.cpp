@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 
-DelayLine::DelayLine(uint size_in) : size(size_in) {
+DelayLine::DelayLine(uint size_in) : Effect(), size(size_in) {
   allocateBuffer();
 }
 
