@@ -29,5 +29,5 @@ private:
   DelayLine del{delTime*4};
   BQFilter lpf{samplerate}, apf{samplerate}; //additional biquad allpassfilter added for more smearing
   float val_g;
-  float val_a = 0.95;
+  float val_a = 0.9;
 };

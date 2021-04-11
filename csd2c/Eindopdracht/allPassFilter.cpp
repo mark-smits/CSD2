@@ -8,7 +8,7 @@ AllPassFilter::AllPassFilter(uint delTime_in, float g_in, uint rate) : delTime(d
   del.setDistance(delTime_in);
   float apf_freq = 1500.0;
   float lpf_freq = 6000.0;
-  float resonance = 0.7;
+  float resonance = 0.5;
   apf.setAPF(apf_freq, resonance);
   lpf.setLPF(lpf_freq, resonance);
 }
@@ -24,11 +24,11 @@ float AllPassFilter::read(float val_in){
 }
 
 void AllPassFilter::setG(float g_in){
-  if (g_in > 1) {
-    g_in = 1;
+  if (g_in > 1.0) {
+    g_in = 1.0;
   }
-  else if (g_in < 0) {
-    g_in = 0;
+  else if (g_in < 0.0) {
+    g_in = 0.0;
   }
   val_g = g_in;
 }
