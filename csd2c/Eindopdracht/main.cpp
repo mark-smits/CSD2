@@ -64,11 +64,11 @@ int main(int argc, char **argv) {
 							std::cout << "\nReverb dry/wet level set to: " << currentVal/10.0 << "\n";
 							break;
 						case 2:
-							verb.setTone(currentVal);
-							std::cout << "\nReverb tone set to: " << currentVal*10.0 << "%\n";
+							verb.setSize(currentVal);
+							std::cout << "\nReverb size set to: " << currentVal*10.0 << "%\n";
 							break;
 						case 3:
-							verb.setSize(currentVal);
+							shifter.changeSawFrequency( pow( 10, (currentVal-5.0)/5.0 ) );
 							std::cout << "\nReverb size set to: " << currentVal*10.0 << "%\n";
 							std::cout << "\n4 changed\n";
 							break;
@@ -103,9 +103,6 @@ int main(int argc, char **argv) {
 			case 'q':
 				running = false;
 				jack.end();
-				break;
-			case 'c':
-				shifter.changeSawFrequency();
 				break;
 		}
 	}

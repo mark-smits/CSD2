@@ -33,7 +33,7 @@ public:
   void initializeShifter();
   void write(float inputFromInbuff);
   float read();
-  void changeSawFrequency();
+  void changeSawFrequency(float freq_in);
   void tick();
 
 protected:

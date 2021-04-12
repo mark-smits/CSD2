@@ -8,7 +8,7 @@ public:
   Saw(float frequency, float samplerate);
   ~Saw();
   
-  void setFrequency();
+  void setFrequency(float freq_in);
   float getFrequency();
   float getSample();
   void tick();

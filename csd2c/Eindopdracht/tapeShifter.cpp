@@ -52,8 +52,7 @@ void TapeShifter::delayDistanceCalc()
   del2.setDistance(((std::fmod((saw1.getSample() + 0.5), 1.0 ) * 100.0) + delTimeScaling) * samplesPerMillisec);  //second buffer modulation at half a wavelength difference
 }
 
-void TapeShifter::changeSawFrequency()
+void TapeShifter::changeSawFrequency(float freq_in)
 {
-  saw1.setFrequency();
-  saw1.getFrequency();
+  saw1.setFrequency(freq_in);
 }

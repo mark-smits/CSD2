@@ -8,10 +8,9 @@ Saw::~Saw()
 {}
 
 
-void Saw::setFrequency()
+void Saw::setFrequency(float freq_in)
 {
-  std::cout << "Osc speed\n";
-  std::cin >> frequency;
+  frequency = freq_in;
 }
 
 float Saw::getFrequency()
