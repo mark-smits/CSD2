@@ -17,6 +17,7 @@ class Encoder {
 		void clip();
 		void checkPins();
 		int getVal();
+		void setVal(int val_in);
 
 	private:
 

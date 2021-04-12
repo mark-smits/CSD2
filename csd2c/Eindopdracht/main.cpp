@@ -17,8 +17,10 @@ int main(int argc, char **argv) {
 	wiringPiSetup();
 	
 	Encoder enc1(6, 13), enc2(1, 0), enc3(8, 7), enc4(16, 9), enc5(3, 15);
+	enc1.setVal(5);
+	enc4.setVal(5);
 	Encoder encList[5] = {enc1, enc2, enc3, enc4, enc5};
-	int lastEncValList[5] = {0,0,0,0,0};
+	int lastEncValList[5] = {5,0,0,5,0};
 	
 	int index = 0;
 	
@@ -30,7 +32,7 @@ int main(int argc, char **argv) {
 	Reverb verb(samplerate);
 	TapeShifter shifter(samplerate*2, samplerate);
 	Hardclip clipper;
-	clipper.setDrive(2);
+	clipper.setDrive(1.0);
 	
 	jack.onProcess = [&verb, &shifter, &clipper, &index, &encList, &lastEncValList](jack_default_audio_sample_t *inBuf,
 		jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
@@ -56,12 +58,12 @@ int main(int argc, char **argv) {
 					switch(i)
 					{
 						case 0:
-							verb.setFB( pow( 0.01, ( 1.0 / (5.0*currentVal+1) ) ) );
-							std::cout << "\nReverb feedback now at value: " << verb.getFB() << "\n";
-							break;
-						case 1:
 							verb.setdw(currentVal/10.0);
 							std::cout << "\nReverb dry/wet level set to: " << currentVal/10.0 << "\n";
+							break;
+						case 1:
+							verb.setFB( pow( 0.01, ( 1.0 / (5.0*currentVal+1) ) ) );
+							std::cout << "\nReverb feedback now at value: " << verb.getFB() << "\n";
 							break;
 						case 2:
 							verb.setSize(currentVal);
@@ -69,11 +71,11 @@ int main(int argc, char **argv) {
 							break;
 						case 3:
 							shifter.changeSawFrequency( pow( 10, (currentVal-5.0)/5.0 ) );
-							std::cout << "\nReverb size set to: " << currentVal*10.0 << "%\n";
-							std::cout << "\n4 changed\n";
+							std::cout << "\nPitch shifting set to: " << currentVal*10.0 << "%\n";
 							break;
 						case 4:
-							std::cout << "\n5 changed\n";
+							clipper.setDrive( 1.0 + currentVal/1.5 );
+							std::cout << "\nDrive set to: " << 1.0 + currentVal/10.0 <<"\n";
 							break;
 					}
 				}

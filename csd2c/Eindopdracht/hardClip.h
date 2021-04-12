@@ -13,7 +13,7 @@ public:
   void tick();
   float read();
 
-  void setDrive(int drive_in);
+  void setDrive(float drive_in);
   int getDrive();
 
   void write(float input);
@@ -21,7 +21,7 @@ public:
 protected:
   float sample_dry;
   float sample_wet;
-  int drive;
+  float drive = 1;
   float input;
 };
 

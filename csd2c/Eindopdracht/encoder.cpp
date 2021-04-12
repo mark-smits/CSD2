@@ -56,3 +56,8 @@ void Encoder::checkPins() {
 int Encoder::getVal() {
 	return val;
 }
+
+void Encoder::setVal(int val_in) {
+	val = val_in;
+	clip();
+}
