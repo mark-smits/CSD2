@@ -53,7 +53,6 @@ int main(int argc, char **argv) {
 				
 				if (currentVal != lastEncValList[i])
 				{
-					std::cout << "\nEncoder " << i+1 << ": " << currentVal << "\n";
 					lastEncValList[i] = currentVal;
 					switch(i)
 					{
