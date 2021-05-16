@@ -50,6 +50,5 @@ int main(int argc,char **argv)
     }
   }
 
-  //end the program
   return 0;
-} // main()
+}

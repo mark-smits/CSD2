@@ -13,16 +13,20 @@ Looper::~Looper(){
 
 void Looper::tick(){
 	del1.tick();
-	checkButton();
-	checkEncoder();
+	while (buttonEncoderCheckIndex >= buttonEncoderCheckNr) {
+		checkButton();
+		checkEncoder();
+		buttonEncoderCheckIndex -= buttonEncoderCheckNr;
+	}
+	buttonEncoderCheckIndex++;
 }
 
 void Looper::checkButton(){
-	
+	but1.checkPin();
 }
 
 void Looper::checkEncoder(){
-	
+	enc1.checkPins();
 }
 
 void Looper::erase(){

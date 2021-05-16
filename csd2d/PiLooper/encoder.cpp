@@ -48,8 +48,9 @@ void Encoder::checkPins() {
 		else {
 			val--;
 		}
+		clip();
+		std::cout << "Encoder value: " << getVal() << "\n";
 	}
-	clip();
 	lPinLastState = readPin(lPin);
 }
 
