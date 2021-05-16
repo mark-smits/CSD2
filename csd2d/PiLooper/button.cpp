@@ -14,8 +14,4 @@ int Button::readPin() {
 
 void Button::checkPin() {
 	val = readPin();
-	if (val != lastVal) {
-		std::cout << "Button value: " << getVal() << "\n";
-	}
-	lastVal = val;
 }

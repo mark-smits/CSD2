@@ -24,12 +24,35 @@ private:
 	inline void setAmp(float amp_in) {amp = amp_in;}
 	inline float getAmp() {return amp;}
 	void setRecodState(int state_in) {recordState = state_in;}
+	void flipRecordState(){recordState = 1 - recordState;}
+	void buttonEventHandler(uint current_val);
+	void buttonOnEvent();
+	void buttonOffEvent();
+	void calculateLongPress();
+	void longEventHandler();
+	void shortEventHandler();
+	
+	uint samplerate;
+	uint maxDelaySeconds = 10;
+	uint maxDelaySize = samplerate * maxDelaySeconds;
 	
 	Encoder enc1{9, 13};
 	Button but1{16};
-	DelayLine del1{44100 * 2};
-	int recordState = 1;
+	DelayLine del1{maxDelaySize * 2};
+	
+	int recordState = 0;
 	float amp = 1.0;
-	int buttonEncoderCheckIndex = 0;
-	int buttonEncoderCheckNr = 10;
+	uint buttonEncoderCheckIndex = 0;
+	uint buttonEncoderCheckNr = 10;
+	uint buttonHoldCounter = 0;
+	uint buttonCurrentVal = 0;
+	uint buttonLastVal = 0;
+	uint buttonHoldTime = 0;
+	bool buttonHoldTimeCounting = false;
+	bool hasBuffer = false;
+	uint longPressThresh = 2 * samplerate/10;
+	bool longPressCondition = false;
+	uint delayDistanceCounter = 0;
+	bool delayDistanceCounting = false;
+	bool delayTicking = false;
 };
