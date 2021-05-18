@@ -25,7 +25,7 @@ int main(int argc,char **argv)
 
     for(unsigned int i = 0; i < nframes; i++) {
       looper.write(inBuf[i]);
-      outBuf[i] = looper.read() * 0.5;
+      outBuf[i] = ( looper.read() + inBuf[i] )* 0.5;
       looper.tick();
     }
     return 0;
@@ -34,7 +34,8 @@ int main(int argc,char **argv)
   jack.autoConnect();
 
   //keep the program running and listen for user input, q = quit
-  std::cout << "\n\nPress 'q' when you want to quit the program.\n";
+  std::cout << "\n\nPiLooper by Mark Smits\nShort button presses handle recording, long presses handle buffer clears\nPress the button to start recording\n";
+  std::cout << "\nPress 'q' when you want to quit the program.\n";
   std::cout << "\nPress 'c' when you want to clear the looper buffer.\n";
   bool running = true;
   while (running)

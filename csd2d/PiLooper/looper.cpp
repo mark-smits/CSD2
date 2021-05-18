@@ -70,12 +70,17 @@ void Looper::longEventHandler(){
 	setRecodState(0);
 	delayDistanceCounting = false;
 	delayTicking = false;
+	std::cout << "Loop cleared\n";
 }
 
 void Looper::shortEventHandler(){
 	if (hasBuffer){
 		flipRecordState();
-		std::cout << "reg short press\n";
+		if (recordState == 1){
+			std::cout << "Recording on\n";
+		}else{
+			std::cout << "Recording off\n";
+		}
 	} else {
 		if (delayDistanceCounting) {
 			delayDistanceCounting = false;
@@ -85,13 +90,13 @@ void Looper::shortEventHandler(){
 			}
 			del1.setDistance(delayDistanceCounter);
 			setRecodState(0);
-			std::cout << "del dist set at: " << delayDistanceCounter << "\n";
+			std::cout << "Loop set\n";
 			hasBuffer = true;
 		} else {
 			setRecodState(1);
 			delayDistanceCounting = true;
 			delayTicking = true;
-			std::cout << "del dist calculating\n";
+			std::cout << "Loop started\n";
 		}
 	}
 }
