@@ -1,0 +1,10 @@
+Reflectie CSD2d:
+
+Aanpak opdracht:
+
+Ik ben deze keer begonnen met een class diagram ipv het maken van prototypes in max gen~.
+Dit was aan de ene kant fijn omdat je al een birds eye view hebt van je project maar dat is uiteindelijk toch incompleet gebleken waardoor het aanpassen nog wat meer werk opleverde.
+De eerste versie van de looper stond vrij snel, het bestond uit een delaylijn die een seconde aan audio loopt en een toggle tussen opnemen of niet. 
+Daartussen heb ik gekeken naar een clean functie om de loopbuffer leeg te maken, maar het gross van het werk is gaan zitten in het werkend krijgen van de knop en dynamische lengtes aanpassen van de buffer.
+Dit heb ik fout ingeschat wat leidde tot meer uren in de laatste week en als gevolg heeft dat het demo filmpje wat gehaast moest worden.
+Als laatste had ik aan het begin het plan om een encoder te implementeren om de write en read snelheden te kunnen varieren maar daar was uiteindelijk geen tijd meer voor.
