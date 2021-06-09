@@ -429,7 +429,7 @@ void MyFirstProjectAudioProcessorEditor::sliderValueChanged(juce::Slider* slider
         double ampVal = cluster2PartialsAmpDial.getValue();
         ampVal = 70.0 * (ampVal - 1.0);
         ampVal = juce::Decibels::decibelsToGain(ampVal);
-        audioProcessor.setCluster1Amp(ampVal);
+        audioProcessor.setCluster2Amp(ampVal);
     }
     else if (slider == &cluster2FreqRatioDial)
     {
@@ -449,7 +449,7 @@ void MyFirstProjectAudioProcessorEditor::sliderValueChanged(juce::Slider* slider
         double ampVal = cluster3PartialsAmpDial.getValue();
         ampVal = 70.0 * (ampVal - 1.0);
         ampVal = juce::Decibels::decibelsToGain(ampVal);
-        audioProcessor.setCluster1Amp(ampVal);
+        audioProcessor.setCluster3Amp(ampVal);
     }
     else if (slider == &cluster3FreqRatioDial)
     {
