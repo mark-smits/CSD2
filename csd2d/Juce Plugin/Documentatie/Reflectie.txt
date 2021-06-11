@@ -1,0 +1,16 @@
+Reflectie Juce plugin:
+
+Op het eerste gezicht leek me deze opdracht een enorme onderneming, schrijf een plugin met Juce binnen drie weken.
+In de eerste week ben ik begonnen met het uitwerken van een concept, een ruwe schets met een quasi UML diagram op papier en het installeren en werken krijgen van Juce (i.e. de helloworld plugin bouwen met audio through).
+Dat verliep prima en daarmee was ook een deel van de stress verholpen, ook omdat ik tutorials had gevonden voor de structuur van de files die de Projucer genereerd.
+Ik had redelijk snel audio uit een plugin dit had ik ook al ondergebracht dmv een sinetable en phasor, dus die hoefde ik alleen nog juist onder te brengen.
+Aan het einde van de tweede week had ik een enkele voice klaar met even en oneven partialen die een constante toon uitgeeft.
+In week drie heb ik veel tijd erin gestoken omdat ik het te leuk begon te vinden, allereerst wilde ik ook nog mijn eigen envelope schrijven, maar daar ben ik gelukkig vanaf gestapt.
+De MIDI implementatie ging redelijk snel, en ook de "preparetoplay" functies en wat andere dingen (zoals de specifiek struct voor envelope parameters) had ik sneller door dan verwacht.
+Uiteindelijk had ik binnen een dag een MID-aanstuurbare synthvoice af. 
+Toen ben ik me bezig gaan houden met de voicehandling dmv een map, deze had ik eerst op papier doorgeredeneerd en dat hielp een hoop in de implementatie.
+Als laatste kon ik aan de hand van het voorbeeld ook snel alle knobs implementeren en linken aan de controls, 
+het enige waar ik van tevoren geen rekening mee had genomen was dat dit veel extra functies oplevert omdat dit door vier lagen aan objecten heen moet (editor->processor->synth->voice->phasor/env).
+Dit vertoebelt een beetje de system diagrams met hele grote UML classes die ik maar naast elkaar ben gaan zetten ipv onder elkaar.
+
+Al met al ben ik denk ik tevreden met het eindresultaat, al had ik Github beter mee moeten nemen in mijn proces en had de documentatie wat schoner/uitgebreider gekund. 
